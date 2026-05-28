@@ -104,6 +104,93 @@ nav {
     }
     .nav-link:hover { color: var(--white); }
 
+
+    @media (max-width: 768px) {
+      .nav { min-height: 64px; }
+      .nav-logo .logo-text { font-size: 24px; }
+    }
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      z-index: 200;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+    .nav-hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.active span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: var(--black);
+      z-index: 150;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+    }
+    .mobile-menu.active { display: flex; }
+    .mobile-menu a {
+      font-family: 'Oswald', sans-serif;
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--white);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: color 0.2s;
+    }
+    .mobile-menu a:hover { color: var(--red); }
+    .cookie-banner {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: #111;
+      border-top: 1px solid #2A2A2A;
+      padding: 18px 24px;
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .cookie-banner.show { display: flex; }
+    .cookie-banner-text {
+      font-size: 13px;
+      color: #A1A1AA;
+      flex: 1;
+      min-width: 260px;
+    }
+    .cookie-banner-text a { color: var(--red); text-decoration: underline; }
+    .cookie-banner-btns { display: flex; gap: 10px; flex-shrink: 0; }
+    .cookie-btn {
+      padding: 9px 20px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 4px;
+      cursor: pointer;
+      border: none;
+      font-family: 'Inter', sans-serif;
+      transition: background 0.2s;
+    }
+    .cookie-btn-accept { background: var(--red); color: var(--white); }
+    .cookie-btn-accept:hover { background: var(--red-dark); }
+    .cookie-btn-decline { background: transparent; color: #A1A1AA; border: 1px solid #333; }
+    .cookie-btn-decline:hover { border-color: #555; color: var(--white); }
+
     /* ===== HERO ===== */
     .partner-hero {
       background: var(--black);
@@ -437,12 +524,22 @@ nav {
       <span class="red-line">RAI$E</span>
     </a>
   </div>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
   <div class="nav-right">
     <a href="/signup.html" class="nav-link">Get Your Team Store</a>
     <div class="nav-badge">No Credit Card — Ever</div>
     <a href="/signup.html" class="btn-nav">Get Started</a>
   </div>
 </nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="/index.html" onclick="closeMobileMenu()">Home</a>
+  <a href="/signup.html" onclick="closeMobileMenu()">Get Your Team Store</a>
+  <a href="/partner.html" onclick="closeMobileMenu()">Work With Us</a>
+</div>
 
 <!-- HERO -->
 <section class="partner-hero">
