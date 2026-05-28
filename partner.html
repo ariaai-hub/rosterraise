@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Work With Us — RosterRaise Partners</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --red: #E63946;
+      --red-dark: #9B1C1C;
+      --black: #0A0A0A;
+      --white: #FFFFFF;
+      --off-white: #F5F5F5;
+      --gray-light: #E5E5E5;
+      --gray: #9CA3AF;
+      --gray-dark: #4B5563;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--black);
+      background: var(--white);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; display: block; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+    .container-narrow { max-width: 680px; margin: 0 auto; padding: 0 40px; }
+
+    /* ===== NAV ===== */
+nav {
+      background: var(--black);
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid #1E1E1E;
+      min-height: 100px;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+    }
+    .nav-logo img { width: 300px; height: auto; display: block; }
+    .nav-logo .logo-text {
+      font-family: 'Oswald', sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      line-height: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .nav-logo .logo-text .white { color: var(--white); }
+    .nav-logo .logo-text .red-line { color: var(--red); }
+    .nav-back {
+      color: #A1A1AA;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--white); }
+    .nav-badge {
+      background: rgba(230,57,70,0.12);
+      border: 1px solid rgba(230,57,70,0.4);
+      color: var(--red);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 5px 14px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .btn-nav {
+      background: var(--red);
+      color: var(--white);
+      border: none;
+      padding: 10px 24px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      border-radius: 4px;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-nav:hover { background: var(--red-dark); transform: translateY(-1px); }
+    .nav-link {
+      color: #A1A1AA;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-link:hover { color: var(--white); }
+
+    /* ===== HERO ===== */
+    .partner-hero {
+      background: var(--black);
+      padding: 100px 0 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .partner-hero::before {
+      content: '';
+      position: absolute;
+      top: -200px;
+      right: -200px;
+      width: 600px;
+      height: 600px;
+      background: var(--red);
+      border-radius: 50%;
+      opacity: 0.07;
+    }
+    .partner-hero .eyebrow {
+      color: var(--red);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      position: relative;
+      z-index: 1;
+    }
+    .partner-hero h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 72px;
+      font-weight: 700;
+      color: var(--white);
+      text-transform: uppercase;
+      line-height: 1.0;
+      margin-bottom: 24px;
+      position: relative;
+      z-index: 1;
+    }
+    .partner-hero h1 .red { color: var(--red); }
+    .partner-hero .hero-sub {
+      color: #A1A1AA;
+      font-size: 19px;
+      line-height: 1.7;
+      max-width: 560px;
+      margin: 0 auto 40px;
+      position: relative;
+      z-index: 1;
+    }
+    .commission-badge {
+      display: inline-block;
+      background: rgba(230,57,70,0.15);
+      border: 1px solid rgba(230,57,70,0.5);
+      color: var(--red);
+      font-family: 'Oswald', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      padding: 12px 32px;
+      border-radius: 8px;
+      margin-bottom: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ===== STAT STRIP ===== */
+    .stat-strip { background: var(--red); padding: 32px 0; }
+    .stat-strip-inner { max-width: 1200px; margin: 0 auto; padding: 0 40px; display: grid; grid-template-columns: repeat(4,1fr); text-align: center; }
+    .stat-item { border-right: 1px solid rgba(255,255,255,0.25); padding: 0 32px; }
+    .stat-item:last-child { border-right: none; }
+    .stat-number { font-family: 'Oswald', sans-serif; font-size: 52px; font-weight: 700; color: var(--white); line-height: 1; }
+    .stat-label { color: #FECACA; font-size: 13px; margin-top: 6px; }
+
+    /* ===== HOW IT WORKS ===== */
+    .how-it-works { padding: 100px 0; background: var(--white); }
+    .section-label { text-align: center; font-size: 12px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--red); margin-bottom: 14px; }
+    .section-headline { text-align: center; font-family: 'Oswald', sans-serif; font-size: 54px; font-weight: 700; text-transform: uppercase; margin-bottom: 60px; line-height: 1.05; }
+    .steps-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 40px; position: relative; }
+    .steps-grid::before {
+      content: '';
+      position: absolute;
+      top: 40px;
+      left: 18%;
+      right: 18%;
+      height: 2px;
+      background: linear-gradient(to right, var(--red), var(--red-dark));
+      opacity: 0.25;
+    }
+    .step-card { text-align: center; position: relative; z-index: 1; }
+    .step-number {
+      width: 84px;
+      height: 84px;
+      background: var(--red);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 40px;
+      font-weight: 700;
+      color: var(--white);
+    }
+    .step-card h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 25px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .step-card p { font-size: 15px; color: var(--gray-dark); line-height: 1.7; }
+
+    /* ===== BENEFITS ===== */
+    .benefits { padding: 100px 0; background: var(--off-white); }
+    .benefits-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 24px; }
+    .benefit-card {
+      background: var(--white);
+      border-radius: 14px;
+      padding: 36px 28px;
+      border: 1px solid var(--gray-light);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .benefit-card .benefit-icon {
+      font-size: 28px;
+      margin-bottom: 16px;
+    }
+    .benefit-card h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 21px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .benefit-card p { font-size: 15px; color: var(--gray-dark); line-height: 1.7; }
+
+    /* ===== QUOTE ===== */
+    .quote-section { padding: 100px 0; background: var(--black); text-align: center; }
+    .quote-section blockquote {
+      font-family: 'Oswald', sans-serif;
+      font-size: 32px;
+      font-weight: 500;
+      color: var(--white);
+      text-transform: uppercase;
+      line-height: 1.3;
+      max-width: 700px;
+      margin: 0 auto 20px;
+    }
+    .quote-attribution {
+      color: var(--gray);
+      font-size: 14px;
+    }
+
+    /* ===== APPLICATION FORM ===== */
+    .apply-section { padding: 100px 0; background: var(--off-white); }
+    .apply-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 52px 56px;
+      border: 1px solid var(--gray-light);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .apply-card h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 42px;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .apply-card .apply-sub {
+      text-align: center;
+      color: var(--gray-dark);
+      font-size: 16px;
+      margin-bottom: 40px;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .form-row.single { grid-template-columns: 1fr; }
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--red);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .form-group label .optional {
+      font-weight: 400;
+      color: #71717A;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      background: #1A1A1A;
+      border: 1px solid #2A2A2A;
+      border-radius: 6px;
+      padding: 13px 40px 13px 16px;
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+      color: var(--red);
+      transition: border-color 0.2s;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23E63946' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: var(--red); opacity: 0.5; }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--red);
+    }
+    .form-group textarea { resize: vertical; min-height: 110px; }
+    .form-group select { color: #888; cursor: pointer; }
+    .form-group select option { background: #1A1A1A; color: #aaa; }
+    .btn-apply {
+      width: 100%;
+      background: var(--red);
+      color: var(--white);
+      border: none;
+      padding: 18px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: background 0.2s, transform 0.2s;
+      margin-top: 8px;
+    }
+    .btn-apply:hover { background: var(--red-dark); transform: translateY(-1px); }
+    .btn-apply:disabled { background: var(--gray); cursor: not-allowed; transform: none; }
+
+    /* SUCCESS */
+    .apply-success {
+      display: none;
+      text-align: center;
+      padding: 40px;
+    }
+    .apply-success.show { display: block; }
+    .apply-success .success-icon {
+      width: 72px;
+      height: 72px;
+      background: rgba(230,57,70,0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      font-size: 32px;
+    }
+    .apply-success h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 36px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .apply-success p { color: var(--gray-dark); font-size: 16px; line-height: 1.7; max-width: 420px; margin: 0 auto; }
+
+    /* ===== FINAL CTA ===== */
+    .final-cta { background: var(--black); padding: 100px 0; }
+    .final-cta-inner { max-width: 700px; margin: 0 auto; text-align: center; }
+    .final-cta h2 { font-family: 'Oswald', sans-serif; font-size: 62px; color: var(--white); text-transform: uppercase; margin-bottom: 14px; }
+    .final-cta h2 .red { color: var(--red); }
+    .final-cta-sub { font-size: 19px; color: #71717A; margin-bottom: 12px; }
+    .final-cta-btn {
+      background: var(--red);
+      color: var(--white);
+      border: none;
+      padding: 22px 72px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 22px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      cursor: pointer;
+      border-radius: 6px;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .final-cta-btn:hover { background: var(--red-dark); transform: translateY(-2px); }
+    .final-cta-trust { margin-top: 20px; font-size: 13px; color: #3B3B3B; }
+
+    /* ===== FOOTER ===== */
+    footer { background: #060606; padding: 40px 0; border-top: 1px solid #111; }
+    .footer-inner { max-width: 1200px; margin: 0 auto; padding: 0 40px; display: flex; justify-content: space-between; align-items: center; }
+    .footer-logo img { height: 56px; width: auto; display: block; }
+    .footer-text { font-size: 12px; color: #333; }
+
+    @media (max-width: 768px) {
+      nav { padding: 14px 20px; }
+      .nav-badge { display: none; }
+      .partner-hero h1 { font-size: 44px; }
+      .stat-strip-inner { grid-template-columns: repeat(2,1fr); }
+      .stat-item { border: none; border-bottom: 1px solid rgba(255,255,255,0.25); padding-bottom: 16px; }
+      .stat-item:last-child { border-bottom: none; }
+      .section-headline { font-size: 36px; }
+      .steps-grid { grid-template-columns: 1fr; gap: 32px; }
+      .steps-grid::before { display: none; }
+      .benefits-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .apply-card { padding: 32px 24px; }
+      .final-cta h2 { font-size: 42px; }
+      .footer-inner { flex-direction: column; gap: 10px; text-align: center; }
+      .container, .container-narrow, .footer-inner { padding-left: 24px; padding-right: 24px; }
+    }
+  </style>
+<!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <a href="/index.html" class="logo-text">
+      <span class="white">ROST</span>
+      <span class="red-line">RAI$E</span>
+    </a>
+  </div>
+  <div class="nav-right">
+    <a href="/signup.html" class="nav-link">Get Your Team Store</a>
+    <div class="nav-badge">No Credit Card — Ever</div>
+    <a href="/signup.html" class="btn-nav">Get Started</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="partner-hero">
+  <div class="container">
+    <div class="eyebrow">Now Hiring — RosterRaise Partners</div>
+    <h1>Make Money<br><span class="red">Helping Teams Win</span></h1>
+    <p class="hero-sub">We're looking for people who know youth sports — coaches, boosters, parents — to help spread the word about RosterRaise in their communities. You connect teams. You earn. They raise money. Everyone wins.</p>
+    <div class="commission-badge">10% Commission on Every Sale</div>
+  </div>
+</section>
+
+<!-- STAT STRIP -->
+<section class="stat-strip">
+  <div class="stat-strip-inner">
+    <div class="stat-item"><div class="stat-number">250+</div><div class="stat-label">Teams Enrolled</div></div>
+    <div class="stat-item"><div class="stat-number">$1,800</div><div class="stat-label">Avg First-Season Earnings</div></div>
+    <div class="stat-item"><div class="stat-number">200+</div><div class="stat-label">Custom Products</div></div>
+    <div class="stat-item"><div class="stat-number">48 hrs</div><div class="stat-label">Store Setup Time</div></div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-it-works">
+  <div class="container">
+    <div class="section-label">How It Works</div>
+    <div class="section-headline">Three Steps to<br>Earning Commission</div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-number">1</div>
+        <h3>Apply</h3>
+        <p>Fill out the short form below. Tell us about your connection to youth sports — coaching, booster clubs, rec leagues, anything goes.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">2</div>
+        <h3>Share</h3>
+        <p>We give you everything you need — a unique link, flyers, talking points. You reach out to teams and coaches in your area and share RosterRaise.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">3</div>
+        <h3>Earn</h3>
+        <p>Every time a team you referred makes a sale, you earn 10% — automatically. There are no quotas. No caps. It adds up fast.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section class="benefits">
+  <div class="container">
+    <div class="section-label">Why Partners Love It</div>
+    <div class="section-headline" style="margin-bottom:40px;">Built for People<br>Who Already Know Sports</div>
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="benefit-icon">💰</div>
+        <h3>Residual Income</h3>
+        <p>Teams keep selling season after season. You keep earning 10% on every order. Refer one great team and it pays you all year long.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🏆</div>
+        <h3>You Already Have Connections</h3>
+        <p>You know the coaches, the boosters, the parents. You're trusted in that world. RosterRaise is a product they actually want — you're not selling anything weird.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">📲</div>
+        <h3>We Handle Everything Else</h3>
+        <p>We build the stores, fulfill the orders, handle customer service. You just connect us to teams. We do the heavy lifting.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">✅</div>
+        <h3>No Quotas. No Pressure.</h3>
+        <p>This is a side hustle, not a job. Refer one team or a hundred. There's no minimum and no obligation. Commission checks land automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<section class="quote-section">
+  <div class="container">
+    <blockquote>"I told three teams about it on a group chat. Two signed up. I'm making money every time one of them sells something. It basically runs itself."</blockquote>
+    <p class="quote-attribution">— Partner since 2024, Atlanta GA</p>
+  </div>
+</section>
+
+<!-- APPLY -->
+<section class="apply-section" id="apply">
+  <div class="container-narrow">
+    <div class="apply-card">
+      <h2>Apply to Partner</h2>
+      <p class="apply-sub">We review applications and respond within 48 hours.</p>
+
+      <div class="apply-success" id="applySuccess">
+        <div class="success-icon">✓</div>
+        <h3>Application Received</h3>
+        <p>We'll be in touch within 48 hours. Keep an eye on your inbox — we'll send next steps there.</p>
+      </div>
+
+      <form id="partnerForm" novalidate>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" name="name" placeholder="e.g. Chris Morales" required>
+          </div>
+          <div class="form-group">
+            <label>Your Email</label>
+            <input type="email" name="email" placeholder="you@example.com" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Phone</label>
+            <input type="tel" name="phone" placeholder="(555) 867-5309" required>
+          </div>
+          <div class="form-group">
+            <label>City & State</label>
+            <input type="text" name="location" placeholder="e.g. Atlanta, GA" required>
+          </div>
+        </div>
+        <div class="form-row single">
+          <div class="form-group">
+            <label>Your Role in Youth Sports</label>
+            <select name="role" required>
+              <option value="" disabled selected>Select your role</option>
+              <option>Coach</option>
+              <option>Booster Club Member</option>
+              <option>Parent / Team Parent</option>
+              <option>Athletic Director</option>
+              <option>Rec League Admin / Commissioner</option>
+              <option>Sports Photographer / Videographer</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row single">
+          <div class="form-group">
+            <label>Tell Us About Yourself</label>
+            <textarea name="about" placeholder="What sports are you involved in? What teams or organizations do you know? How do you plan to reach them?" required></textarea>
+          </div>
+        </div>
+        <button type="submit" class="btn-apply" id="applyBtn">Submit Application →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <div class="final-cta-inner">
+    <h2>Questions?<br><span class="red">Let's Talk.</span></h2>
+    <p class="final-cta-sub">We're looking for partners who want to earn without the headache.</p>
+    <a href="/signup.html" class="final-cta-btn">Start My Team Store →</a>
+    <p class="final-cta-trust">No credit card. No commitment. No catches.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo"><a href="/index.html"><img src="logo_nav.png" alt="RosterRaise"></a></div>
+    <div class="footer-text">© 2025 RosterRaise. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+  const form = document.getElementById('partnerForm');
+  const success = document.getElementById('applySuccess');
+  const applyBtn = document.getElementById('applyBtn');
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const required = ['name', 'email', 'phone', 'location', 'role', 'about'];
+    let valid = true;
+    required.forEach(name => {
+      const field = form.querySelector(`[name="${name}"]`);
+      if (!field.value.trim()) {
+        field.style.borderColor = '#E63946';
+        valid = false;
+        field.addEventListener('input', () => { field.style.borderColor = ''; }, { once: true });
+      }
+    });
+    if (!valid) return;
+
+    applyBtn.disabled = true;
+    applyBtn.textContent = 'Submitting...';
+
+    const formData = new FormData(form);
+    const payload = {};
+    formData.forEach((value, key) => { payload[key] = value; });
+    console.log('Partner application:', payload);
+
+    form.style.display = 'none';
+    success.classList.add('show');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+
+</body>
+</html>
