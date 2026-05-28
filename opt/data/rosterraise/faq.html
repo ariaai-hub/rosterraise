@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RosterRaise — Frequently Asked Questions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --red: #E63946;
+      --red-dark: #9B1C1C;
+      --black: #0A0A0A;
+      --white: #FFFFFF;
+      --off-white: #F5F5F5;
+      --dark-card: #141414;
+      --gray-light: #E5E5E5;
+      --gray: #9CA3AF;
+      --gray-dark: #4B5563;
+      --dark-bg: #0E0E0E;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--black);
+      background: var(--off-white);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; display: block; }
+
+    /* ===== NAV ===== */
+    nav {
+      background: var(--black);
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid #1E1E1E;
+      min-height: 100px;
+    }
+    .nav-logo { display: flex; align-items: center; }
+    .nav-logo a { display: flex; align-items: center; text-decoration: none; }
+    .nav-logo img { width: 280px; height: auto; display: block; }
+    .nav-right { display: flex; align-items: center; gap: 20px; }
+    .nav-badge {
+      background: rgba(230,57,70,0.12);
+      border: 1px solid rgba(230,57,70,0.4);
+      color: var(--red);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 5px 14px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .btn-nav {
+      background: var(--red);
+      color: var(--white);
+      border: none;
+      padding: 10px 24px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      border-radius: 4px;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-nav:hover { background: var(--red-dark); transform: translateY(-1px); }
+    .nav-link { color: #A1A1AA; font-size: 13px; font-weight: 500; text-decoration: none; transition: color 0.2s; }
+    .nav-link:hover { color: var(--white); }
+
+    /* ===== MOBILE NAV ===== */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      z-index: 200;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+    .nav-hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.active span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: var(--black);
+      z-index: 150;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+    }
+    .mobile-menu.active { display: flex; }
+    .mobile-menu a {
+      font-family: 'Oswald', sans-serif;
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--white);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: color 0.2s;
+    }
+    .mobile-menu a:hover { color: var(--red); }
+
+    /* ===== COOKIE CONSENT ===== */
+    .cookie-banner {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: #111;
+      border-top: 1px solid #2A2A2A;
+      padding: 18px 24px;
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .cookie-banner.show { display: flex; }
+    .cookie-banner-text { font-size: 13px; color: #A1A1AA; flex: 1; min-width: 260px; }
+    .cookie-banner-text a { color: var(--red); text-decoration: underline; }
+    .cookie-banner-btns { display: flex; gap: 10px; flex-shrink: 0; }
+    .cookie-btn {
+      padding: 9px 20px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 4px;
+      cursor: pointer;
+      border: none;
+      font-family: 'Inter', sans-serif;
+      transition: background 0.2s;
+    }
+    .cookie-btn-accept { background: var(--red); color: var(--white); }
+    .cookie-btn-accept:hover { background: var(--red-dark); }
+    .cookie-btn-decline { background: transparent; color: #A1A1AA; border: 1px solid #333; }
+    .cookie-btn-decline:hover { border-color: #555; color: var(--white); }
+
+    /* ===== FAQ HERO ===== */
+    .faq-hero {
+      background: var(--black);
+      padding: 80px 0 60px;
+      text-align: center;
+    }
+    .faq-hero h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 60px;
+      font-weight: 700;
+      color: var(--white);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .faq-hero h1 .red { color: var(--red); }
+    .faq-hero p {
+      font-size: 18px;
+      color: #A1A1AA;
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.65;
+    }
+
+    /* ===== FAQ ACCORDION ===== */
+    .faq-section {
+      background: var(--off-white);
+      padding: 80px 0;
+    }
+    .faq-section.dark { background: var(--dark-bg); }
+    .faq-section.dark .faq-question { color: var(--white); border-bottom-color: #222; }
+    .faq-section.dark .faq-answer-inner { color: var(--gray); }
+    .section-label { text-align: center; font-size: 12px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--red); margin-bottom: 14px; }
+    .section-headline { text-align: center; font-family: 'Oswald', sans-serif; font-size: 48px; font-weight: 700; text-transform: uppercase; margin-bottom: 50px; line-height: 1.1; color: var(--black); }
+    .faq-section.dark .section-headline { color: var(--white); }
+
+    .faq-list { max-width: 800px; margin: 0 auto; padding: 0 40px; }
+    .faq-item { border-bottom: 1px solid #D1D5DB; }
+    .faq-section.dark .faq-item { border-bottom-color: #222; }
+    .faq-question {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 0;
+      cursor: pointer;
+      font-family: 'Oswald', sans-serif;
+      font-size: 20px;
+      text-transform: uppercase;
+      user-select: none;
+      color: var(--black);
+      transition: color 0.2s;
+    }
+    .faq-question:hover { color: var(--red); }
+    .faq-answer {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.35s ease;
+    }
+    .faq-answer-inner {
+      padding-bottom: 22px;
+      font-size: 15px;
+      color: var(--gray-dark);
+      line-height: 1.75;
+    }
+    .faq-section.dark .faq-answer-inner { color: var(--gray); }
+    .faq-item.is-open .faq-answer { max-height: 400px; }
+    .faq-toggle {
+      color: var(--red);
+      font-size: 26px;
+      font-weight: 400;
+      line-height: 1;
+      min-width: 24px;
+      text-align: center;
+    }
+
+    /* ===== CTA ===== */
+    .faq-cta {
+      background: var(--red);
+      padding: 80px 0;
+      text-align: center;
+    }
+    .faq-cta h2 { font-family: 'Oswald', sans-serif; font-size: 52px; color: var(--white); text-transform: uppercase; margin-bottom: 14px; }
+    .faq-cta p { font-size: 18px; color: #FECACA; margin-bottom: 32px; }
+    .faq-cta .cta-btn {
+      background: var(--white);
+      color: var(--red);
+      border: none;
+      padding: 18px 48px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      border-radius: 6px;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .faq-cta .cta-btn:hover { background: var(--off-white); transform: translateY(-2px); }
+
+    /* ===== FOOTER ===== */
+    footer { background: #060606; padding: 40px 0; border-top: 1px solid #111; }
+    .footer-inner { max-width: 1200px; margin: 0 auto; padding: 0 40px; display: flex; justify-content: space-between; align-items: center; }
+    .footer-logo a { text-decoration: none; display: flex; align-items: center; gap: 10px; }
+    .footer-logo img { height: 48px; width: auto; display: block; }
+    .footer-text { font-size: 12px; color: #333; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      nav { padding: 14px 20px; }
+      .nav-right { display: none; }
+      .nav-hamburger { display: flex; }
+      .faq-hero h1 { font-size: 40px; }
+      .section-headline { font-size: 36px; }
+      .faq-question { font-size: 17px; }
+      .faq-cta h2 { font-size: 38px; }
+      .footer-inner { flex-direction: column; gap: 10px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <a href="/index.html">
+      <img src="/logo_nav.png" alt="RosterRaise">
+    </a>
+  </div>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-right">
+    <a href="/partner.html" class="nav-link">Work With Us</a>
+    <div class="nav-badge">No Credit Card — Ever</div>
+    <a href="/signup.html" class="btn-nav">Get My Team Store</a>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="/index.html" onclick="closeMobileMenu()">Home</a>
+  <a href="/partner.html" onclick="closeMobileMenu()">Work With Us</a>
+  <a href="/signup.html" onclick="closeMobileMenu()">Get My Team Store</a>
+</div>
+
+<!-- FAQ HERO -->
+<section class="faq-hero">
+  <h1>Frequently Asked<br><span class="red">Questions</span></h1>
+  <p>Everything you need to know about RosterRaise — how it works, how you get paid, and what you get.</p>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="faq-section">
+  <div class="faq-list">
+    <div class="section-label">How It Works</div>
+    <div class="section-headline">Getting Started</div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        How does RosterRaise actually work?
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          You sign up and give us your team logo, name, sport, and colors. Within 48 hours we build a custom storefront with product mockups made specifically for your team. You approve the designs, and your store goes live. Every time a parent or fan buys something, your team earns 30% of the sale. We handle printing, shipping, and all customer service. You just share the link.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        How long does it take to set up our team store?
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Your store is typically live within 48 hours of submitting your information. You'll receive mockup previews so you can see exactly what your products look like before anything goes public. The signup form itself takes about 2 minutes.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        Do we need design skills or a website?
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          No. We design your store and create product mockups for you. You don't need a website, design software, or any technical skills. You just approve the mockups we send and share your store URL with parents.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        How do we share the store with parents?
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          You'll get a unique team store URL (for example: rosterraise.com/store/yourteam). You can share it via text, email, Facebook, Instagram, or send it home with kids on a flyer. We also provide ready-to-post social graphics and email copy so you can share in under a minute.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="faq-section dark">
+  <div class="faq-list">
+    <div class="section-label">Products</div>
+    <div class="section-headline">What Parents Can Buy</div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        What kind of products can we sell?
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          We offer 200+ custom products including koozies, spirit chains, keychains, hoodies, t-shirts, backpacks, duffle bags, water bottles, decals, koozie wraps, and window clings. Every item is custom-printed or embroidered with your team's logo, name, and colors. No generic stock items — everything is made-to-order for your team.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        Can we add different products after we launch?
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Yes. We can add new products, colors, styles, or designs at any time after your store is live. You can also run limited-theme drops for specific seasons, tournaments, or events.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        Is there a minimum order quantity?
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          No minimums. Unlike traditional fundraisers where you commit to bulk quantities upfront, every RosterRaise product is made-to-order. No pre-selling required, no inventory to manage, no upfront costs.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PAYMENTS & COMMISSION -->
+<section class="faq-section">
+  <div class="faq-list">
+    <div class="section-label">Payments & Earnings</div>
+    <div class="section-headline">How Teams Get Paid</div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        How is the commission calculated?
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Your team earns 30% of the retail sale price on every item sold. For example, if a koozie sells for $5, your team receives $1.50. If a hoodie sells for $30, your team receives $9. The price is set by us and covers all production and shipping — you earn pure commission on top.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        When and how do teams get paid?
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Team commissions are paid every 2 weeks via check or direct deposit. No invoicing, no chasing — we send earnings on a set schedule. You'll have a real-time dashboard showing every sale and your running total so there's full visibility.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        How much does it cost to get started?
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          $0 to set up your team store. The setup process is free. If you want physical samples of your team's products to show at games or parent events, you can order an optional sample kit — but that's entirely not required to get started or to earn commissions.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SHIPPING & FULFILLMENT -->
+<section class="faq-section dark">
+  <div class="faq-list">
+    <div class="section-label">Shipping & Fulfillment</div>
+    <div class="section-headline">Orders & Delivery</div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        How long does shipping take?
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Orders typically ship within 3–5 business days directly to the buyer's door. No coordinating pickup, no storage in your garage. Every order — whether it's to a parent, grandparent, or extended family member — ships individually with tracking.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        Who handles customer service and returns?
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          We handle every customer question, quality issue, and return directly with the buyer. Your name stays clean and your focus stays on coaching. If anything is wrong — wrong size, print defect, shipping damage — we make it right.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        Do you ship internationally?
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          All products currently ship within the United States only. We're working on expanding international shipping to keep production fast and reliable, but for now every order goes to US addresses.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MULTIPLE FUNDRAISERS -->
+<section class="faq-section">
+  <div class="faq-list">
+    <div class="section-label">Multiple Fundraisers</div>
+    <div class="section-headline">Running More Than One</div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        Can we run separate fundraisers for multiple teams?
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Yes. Each team gets its own branded storefront with its own URL. If you're a club with multiple age groups or a league with many teams, each can have a separate store and separate commission payouts.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        Can we run more than one campaign at the same time?
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Your store is always live, so you can run ongoing fundraising all season long. You can also create limited-time drops for specific events, tournaments, or senior nights — then rotate in new products. There's no limit on how many campaigns you run.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="faq-cta">
+  <h2>Ready to Start<br>Your Team Store?</h2>
+  <p>Join 250+ teams who stopped chasing fundraisers and started earning.</p>
+  <a href="/signup.html" class="cta-btn">Start My Team Store →</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <a href="/index.html">
+        <img src="/logo_footer.png" alt="RosterRaise">
+      </a>
+    </div>
+    <div class="footer-text">© 2025 RosterRaise. All rights reserved.</div>
+  </div>
+</footer>
+
+<!-- COOKIE CONSENT BANNER -->
+<div class="cookie-banner" id="cookieBanner">
+  <div class="cookie-banner-text">
+    We use cookies to improve your experience and analyze site traffic.
+    By clicking "Accept," you consent to our use of cookies.
+    <a href="/privacy.html">Learn more</a>
+  </div>
+  <div class="cookie-banner-btns">
+    <button class="cookie-btn cookie-btn-decline" onclick="rejectCookies()">Decline</button>
+    <button class="cookie-btn cookie-btn-accept" onclick="acceptCookies()">Accept</button>
+  </div>
+</div>
+
+<script>
+  // FAQ accordion
+  document.getElementById('faqList') && document.getElementById('faqList').addEventListener('click', function(e) {
+    var question = e.target.closest('.faq-question');
+    if (!question) return;
+    var item = question.parentElement;
+    var isOpen = item.classList.contains('is-open');
+    var toggle = question.querySelector('.faq-toggle');
+
+    document.querySelectorAll('.faq-item').forEach(function(i) {
+      i.classList.remove('is-open');
+      i.querySelector('.faq-toggle').textContent = '+';
+    });
+
+    if (!isOpen) {
+      item.classList.add('is-open');
+      toggle.textContent = '−';
+    }
+  });
+
+  // Also handle the second faq-list if present
+  document.querySelectorAll('.faq-list').forEach(function(list) {
+    list.addEventListener('click', function(e) {
+      var question = e.target.closest('.faq-question');
+      if (!question) return;
+      var item = question.parentElement;
+      var isOpen = item.classList.contains('is-open');
+      var toggle = question.querySelector('.faq-toggle');
+
+      item.parentElement.querySelectorAll('.faq-item').forEach(function(i) {
+        i.classList.remove('is-open');
+        i.querySelector('.faq-toggle').textContent = '+';
+      });
+
+      if (!isOpen) {
+        item.classList.add('is-open');
+        toggle.textContent = '−';
+      }
+    });
+  });
+
+  // Cookie banner
+  (function() {
+    var banner = document.getElementById('cookieBanner');
+    if (!banner) return;
+    if (localStorage.getItem('cookieConsent')) return;
+    banner.classList.add('show');
+
+    window.acceptCookies = function() {
+      localStorage.setItem('cookieConsent', 'accepted');
+      banner.classList.remove('show');
+    };
+    window.rejectCookies = function() {
+      localStorage.setItem('cookieConsent', 'declined');
+      banner.classList.remove('show');
+    };
+
+    var hamburger = document.getElementById('navHamburger');
+    var mobileMenu = document.getElementById('mobileMenu');
+    if (hamburger && mobileMenu) {
+      hamburger.addEventListener('click', function() {
+        hamburger.classList.toggle('active');
+        mobileMenu.classList.toggle('active');
+        document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+      });
+      window.closeMobileMenu = function() {
+        hamburger.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+  })();
+</script>
+
+</body>
+</html>
