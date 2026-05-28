@@ -639,5 +639,51 @@ nav {
   });
 </script>
 
+
+<!-- COOKIE CONSENT BANNER -->
+<div class="cookie-banner" id="cookieBanner">
+  <div class="cookie-banner-text">
+    We use cookies to improve your experience and analyze site traffic.
+    By clicking "Accept," you consent to our use of cookies.
+    <a href="/privacy.html">Learn more</a>
+  </div>
+  <div class="cookie-banner-btns">
+    <button class="cookie-btn cookie-btn-decline" onclick="rejectCookies()">Decline</button>
+    <button class="cookie-btn cookie-btn-accept" onclick="acceptCookies()">Accept</button>
+  </div>
+</div>
+
+<script>
+(function() {
+  var banner = document.getElementById('cookieBanner');
+  if (!banner) return;
+  if (localStorage.getItem('cookieConsent')) return;
+  banner.classList.add('show');
+
+  window.acceptCookies = function() {
+    localStorage.setItem('cookieConsent', 'accepted');
+    banner.classList.remove('show');
+  };
+  window.rejectCookies = function() {
+    localStorage.setItem('cookieConsent', 'declined');
+    banner.classList.remove('show');
+  };
+
+  var hamburger = document.getElementById('navHamburger');
+  var mobileMenu = document.getElementById('mobileMenu');
+  if (hamburger && mobileMenu) {
+    hamburger.addEventListener('click', function() {
+      hamburger.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
+      document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+    });
+    window.closeMobileMenu = function() {
+      hamburger.classList.remove('active');
+      mobileMenu.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  }
+})();
+</script>
 </body>
 </html>
