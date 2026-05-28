@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RosterRaise — Fundraise Without Selling Anything Yourself</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --red: #E63946;
+      --red-dark: #9B1C1C;
+      --black: #0A0A0A;
+      --white: #FFFFFF;
+      --off-white: #F5F5F5;
+      --dark-card: #141414;
+      --gray-light: #E5E5E5;
+      --gray: #9CA3AF;
+      --gray-dark: #4B5563;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--black);
+      background: var(--white);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; display: block; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+
+    /* ===== NAV ===== */
+    nav {
+      background: var(--black);
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid #1E1E1E;
+      min-height: 100px;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+    }
+    .nav-logo img {
+      width: 280px;
+      height: auto;
+      display: block;
+    }
+    .nav-logo .logo-text {
+      font-family: 'Oswald', sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      line-height: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .nav-logo .logo-text .white { color: var(--white); }
+    .nav-logo .logo-text .red { color: var(--red); }
+    .nav-logo .logo-text .red-line { color: var(--red); }
+    .nav-right { display: flex; align-items: center; gap: 20px; }
+    .nav-badge {
+      background: rgba(230,57,70,0.12);
+      border: 1px solid rgba(230,57,70,0.4);
+      color: var(--red);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 5px 14px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .btn-nav {
+      background: var(--red);
+      color: var(--white);
+      border: none;
+      padding: 10px 24px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      border-radius: 4px;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-nav:hover { background: var(--red-dark); transform: translateY(-1px); }
+    .nav-link {
+      color: #A1A1AA;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-link:hover { color: var(--white); }
+
+    /* ===== HERO ===== */
+    .hero {
+      background: var(--black);
+      padding: 80px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -250px;
+      right: -250px;
+      width: 700px;
+      height: 700px;
+      background: var(--red);
+      border-radius: 50%;
+      opacity: 0.07;
+    }
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-text h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 72px;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.15;
+      text-transform: uppercase;
+      margin-bottom: 0;
+    }
+    .hero-text h1 .red { color: var(--red); display: block; }
+    .hero-text .subhead {
+      font-size: 19px;
+      color: #A1A1AA;
+      line-height: 1.65;
+      margin-bottom: 0;
+      max-width: 500px;
+    }
+    .hero-form {
+      background: #1A1A1A;
+      border: 1px solid #2A2A2A;
+      border-radius: 14px;
+      padding: 28px;
+    }
+    .hero-form-label {
+      color: var(--red);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 18px;
+      display: block;
+    }
+    .hero-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+    .form-input {
+      width: 100%;
+      background: #1A1A1A;
+      border: 1px solid #2A2A2A;
+      border-radius: 6px;
+      padding: 13px 16px;
+      color: var(--red);
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-input::placeholder { color: var(--red); opacity: 0.5; }
+    .form-input:focus { border-color: var(--red); }
+    .form-select {
+      width: 100%;
+      background: #1A1A1A;
+      border: 1px solid #2A2A2A;
+      border-radius: 6px;
+      padding: 13px 40px 13px 16px;
+      color: var(--red);
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+      appearance: none;
+      cursor: pointer;
+      margin-bottom: 10px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23E63946' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+    }
+    select.form-select option { background: #1A1A1A; color: var(--red); }
+    select.form-select option:first-child { color: var(--red); opacity: 0.5; }
+    .btn-hero-cta {
+      width: 100%;
+      background: var(--red);
+      color: var(--white);
+      border: none;
+      padding: 17px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      cursor: pointer;
+      border-radius: 6px;
+      margin-top: 4px;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-hero-cta:hover { background: var(--red-dark); transform: translateY(-1px); }
+    .hero-trust { font-size: 12px; color: #444; margin-top: 12px; text-align: center; }
+    .hero-trust span { color: #777; }
+    .hero-right {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .hero-img-wrap {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid #222;
+      flex: 1;
+    }
+    .hero-img { width: 100%; max-height: 500px; object-fit: cover; display: block; }
+    .img-placeholder {
+      width: 100%; height: 400px;
+      background: #1a1a1a;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      border-radius: 16px;
+    }
+    .img-placeholder svg { width: 80px; height: 80px; opacity: 0.3; }
+    .img-placeholder span { color: #444; font-size: 12px; margin-top: 12px; text-transform: uppercase; letter-spacing: 1px; }
+    .hero-earnings-badge {
+      position: absolute;
+      bottom: 20px; left: 20px;
+      background: var(--red);
+      border-radius: 12px;
+      padding: 16px 22px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .eb-amount { font-family: 'Oswald', sans-serif; font-size: 40px; font-weight: 700; color: var(--white); line-height: 1; }
+    .eb-label { color: #FECACA; font-size: 12px; line-height: 1.3; }
+
+    /* ===== STAT STRIP ===== */
+    .stat-strip { background: var(--red); padding: 32px 0; }
+    .stat-strip-inner { max-width: 1200px; margin: 0 auto; padding: 0 40px; display: grid; grid-template-columns: repeat(4,1fr); text-align: center; }
+    .stat-item { border-right: 1px solid rgba(255,255,255,0.25); padding: 0 32px; }
+    .stat-item:last-child { border-right: none; }
+    .stat-number { font-family: 'Oswald', sans-serif; font-size: 52px; font-weight: 700; color: var(--white); line-height: 1; }
+    .stat-label { color: #FECACA; font-size: 13px; margin-top: 6px; }
+
+    /* ===== ROTATING GALLERY (CONTINUOUS AUTO-ROTATE) ===== */
+    .gallery-section {
+      background: var(--black);
+      padding: 100px 0;
+      overflow: hidden;
+      position: relative;
+    }
+    .gallery-section .section-label { color: var(--red); }
+    .gallery-section .section-headline { color: var(--white); }
+    .gallery-outer {
+      position: relative;
+      height: 480px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .gallery-carousel {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      position: relative;
+    }
+    .gallery-item {
+      flex-shrink: 0;
+      width: 700px;
+      height: 450px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 2px solid #2A2A2A;
+      background: #111;
+      position: absolute;
+      opacity: 0;
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      transform: scale(0.95);
+      pointer-events: none;
+    }
+    .gallery-item.active {
+      opacity: 1;
+      transform: scale(1);
+      position: relative;
+      z-index: 2;
+    }
+    .gallery-item.prev,
+    .gallery-item.next {
+      opacity: 0.4;
+      transform: scale(0.88);
+      z-index: 1;
+    }
+    .gallery-item.prev { transform-origin: right center; }
+    .gallery-item.next { transform-origin: left center; }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .gallery-item-info { display: none; }
+
+    /* ===== PROBLEM ===== */
+    .problem { background: var(--off-white); padding: 100px 0; }
+    .section-label { text-align: center; font-size: 12px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--red); margin-bottom: 14px; }
+    .section-headline { text-align: center; font-family: 'Oswald', sans-serif; font-size: 54px; font-weight: 700; text-transform: uppercase; margin-bottom: 60px; line-height: 1.05; }
+    .pain-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; margin-bottom: 40px; }
+    .pain-card { background: var(--white); border-radius: 14px; padding: 36px 28px; border: 1px solid var(--gray-light); box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .pain-icon { width: 52px; height: 52px; background: linear-gradient(135deg,#FEE2E2,#FECACA); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 18px; font-size: 24px; }
+    .pain-card h3 { font-family: 'Oswald', sans-serif; font-size: 21px; font-weight: 600; margin-bottom: 10px; text-transform: uppercase; }
+    .pain-card p { font-size: 15px; color: var(--gray-dark); line-height: 1.7; }
+    .old-way { background: var(--white); border-radius: 16px; padding: 44px; border: 2px solid #FFD700; text-align: center; position: relative; }
+    .old-way-label { font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #D97706; background: #FEF3C7; display: inline-block; padding: 5px 16px; border-radius: 20px; margin-bottom: 16px; }
+    .old-way h3 { font-family: 'Oswald', sans-serif; font-size: 28px; text-transform: uppercase; margin-bottom: 28px; }
+    .old-way-items { display: flex; justify-content: center; gap: 36px; flex-wrap: wrap; }
+    .old-way-item { display: flex; align-items: center; gap: 8px; font-size: 15px; color: #6B7280; text-decoration: line-through; }
+    .old-way-item .x { color: var(--red); font-weight: 700; }
+
+    /* ===== HOW IT WORKS ===== */
+    .howitworks { background: var(--white); padding: 100px 0; }
+    .steps-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 40px; position: relative; }
+    .steps-grid::before { content: ''; position: absolute; top: 40px; left: 18%; right: 18%; height: 2px; background: linear-gradient(to right,var(--red),var(--red-dark)); opacity: 0.25; }
+    .step-card { text-align: center; position: relative; z-index: 1; }
+    .step-number { width: 84px; height: 84px; background: var(--red); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; font-family: 'Oswald', sans-serif; font-size: 40px; font-weight: 700; color: var(--white); }
+    .step-time { display: inline-block; background: #FEE2E2; color: var(--red); font-size: 12px; font-weight: 700; padding: 4px 14px; border-radius: 20px; margin-bottom: 14px; }
+    .step-card h3 { font-family: 'Oswald', sans-serif; font-size: 25px; text-transform: uppercase; margin-bottom: 12px; }
+    .step-card p { font-size: 15px; color: var(--gray-dark); line-height: 1.7; }
+
+    /* ===== PRODUCTS ===== */
+    .products { background: var(--black); padding: 100px 0; }
+    .products .section-headline { color: var(--white); }
+    .products .section-label { color: var(--red); }
+    .product-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; }
+    .product-card { background: #1A1A1A; border-radius: 12px; overflow: hidden; border: 1px solid #2A2A2A; }
+    .product-img { width: 100%; height: 220px; object-fit: cover; }
+    .product-body { padding: 20px; }
+    .product-name { font-family: 'Oswald', sans-serif; font-size: 18px; color: var(--white); text-transform: uppercase; margin-bottom: 6px; }
+    .product-desc { font-size: 13px; color: #71717A; line-height: 1.5; margin-bottom: 12px; }
+    .product-price { background: rgba(230,57,70,0.15); border: 1px solid rgba(230,57,70,0.5); color: var(--red); font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 20px; display: inline-block; }
+    .products-note { text-align: center; color: #71717A; font-size: 14px; margin-top: 24px; }
+
+    /* ===== WHAT YOU GET ===== */
+    .whatyouget { background: var(--off-white); padding: 100px 0; }
+    .offer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+    .offer-left-img { width: 100%; border-radius: 16px; object-fit: cover; height: 520px; }
+    .offer-right { padding: 0; margin: 0; }
+    .offer-right h3 { font-family: 'Oswald', sans-serif; font-size: 42px; text-transform: uppercase; margin-bottom: 28px; line-height: 1.1; padding: 0; }
+    .offer-list { list-style: none; padding: 0; margin: 0; }
+    .offer-list li { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 20px; }
+    .offer-list .check { width: 26px; height: 26px; background: var(--red); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+    .offer-list .check svg { width: 15px; height: 15px; }
+    .offer-list .text { font-size: 16px; color: #374151; line-height: 1.55; }
+    .offer-list .text strong { color: var(--black); }
+    .offer-note { background: #1A1A1A; border-radius: 12px; padding: 22px 26px; margin-top: 28px; }
+    .offer-note-badge { background: var(--red); color: var(--white); font-size: 11px; font-weight: 700; padding: 3px 12px; border-radius: 20px; display: inline-block; margin-bottom: 10px; }
+    .offer-note p { font-size: 14px; color: #A1A1AA; line-height: 1.65; }
+    .offer-note strong { color: var(--white); }
+
+    /* ===== SOCIAL PROOF ===== */
+    .socialproof { background: white; padding: 100px 0; }
+    .testimonial-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+    .testimonial { background: var(--off-white); border-radius: 14px; padding: 32px; border: 1px solid var(--gray-light); }
+    .testimonial-stars { color: #F59E0B; font-size: 20px; margin-bottom: 14px; letter-spacing: 2px; }
+    .testimonial-text { font-size: 16px; color: #374151; line-height: 1.7; margin-bottom: 22px; font-style: italic; }
+    .testimonial-text strong { color: var(--black); font-style: normal; }
+    .testimonial-meta { display: flex; align-items: center; gap: 14px; }
+    .testimonial-avatar { width: 48px; height: 48px; border-radius: 50%; background: var(--red); display: flex; align-items: center; justify-content: center; color: var(--white); font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 18px; flex-shrink: 0; }
+    .testimonial-name { font-weight: 700; font-size: 14px; color: var(--black); }
+    .testimonial-role { font-size: 12px; color: var(--gray); margin-top: 2px; }
+
+    /* ===== GUARANTEE ===== */
+    .guarantee { background: var(--red); padding: 80px 0; }
+    .guarantee-inner { max-width: 800px; margin: 0 auto; text-align: center; }
+    .guarantee-inner h2 { font-family: 'Oswald', sans-serif; font-size: 56px; color: var(--white); text-transform: uppercase; margin-bottom: 16px; }
+    .guarantee-inner p { font-size: 18px; color: #FECACA; margin-bottom: 32px; line-height: 1.65; }
+    .guarantee-badge { background: rgba(255,255,255,0.12); border: 2px solid rgba(255,255,255,0.35); border-radius: 16px; padding: 26px 36px; display: inline-block; }
+    .guarantee-badge svg { width: 52px; height: 52px; margin: 0 auto 14px; }
+    .guarantee-badge p { font-size: 15px; color: var(--white); margin: 0; font-weight: 600; line-height: 1.4; }
+
+    /* ===== SHIPPING & FULFILLMENT ===== */
+    .shipping { background: var(--off-white); padding: 100px 0; }
+    .shipping-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+    .shipping-card { background: var(--white); border-radius: 14px; padding: 34px 28px; border: 1px solid var(--gray-light); text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .shipping-icon { width: 60px; height: 60px; background: linear-gradient(135deg,#FEE2E2,#FECACA); border-radius: 14px; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; }
+    .shipping-card h3 { font-family: 'Oswald', sans-serif; font-size: 21px; text-transform: uppercase; margin-bottom: 10px; }
+    .shipping-card p { font-size: 14px; color: var(--gray-dark); line-height: 1.7; }
+
+    /* ===== FAQ ===== */
+    .faq { background: var(--white); padding: 100px 0; }
+    .faq-list { max-width: 800px; margin: 0 auto; }
+    .faq-item { border-bottom: 1px solid var(--gray-light); }
+    .faq-question {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 0;
+      cursor: pointer;
+      font-family: 'Oswald', sans-serif;
+      font-size: 20px;
+      text-transform: uppercase;
+      user-select: none;
+    }
+    .faq-answer {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.35s ease;
+    }
+    .faq-answer-inner { padding-bottom: 22px; font-size: 15px; color: var(--gray-dark); line-height: 1.75; }
+    .faq-item.is-open .faq-answer { max-height: 300px; }
+    .faq-toggle {
+      color: var(--red);
+      font-size: 26px;
+      font-weight: 400;
+      line-height: 1;
+      min-width: 24px;
+      text-align: center;
+    }
+
+    /* ===== FINAL CTA ===== */
+    .final-cta { background: var(--black); padding: 100px 0; }
+    .final-cta-inner { max-width: 700px; margin: 0 auto; text-align: center; }
+    .final-cta h2 { font-family: 'Oswald', sans-serif; font-size: 62px; color: var(--white); text-transform: uppercase; margin-bottom: 14px; }
+    .final-cta h2 .red { color: var(--red); }
+    .final-cta-sub { font-size: 19px; color: #71717A; margin-bottom: 12px; }
+    .final-cta-note { font-size: 13px; color: #404040; margin-bottom: 40px; }
+    .final-cta-btn { background: var(--red); color: var(--white); border: none; padding: 22px 72px; font-family: 'Oswald', sans-serif; font-size: 22px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; border-radius: 6px; text-decoration: none; display: inline-block; transition: background 0.2s, transform 0.2s; }
+    .final-cta-btn:hover { background: var(--red-dark); transform: translateY(-2px); }
+    .final-cta-trust { margin-top: 20px; font-size: 13px; color: #3B3B3B; }
+
+    /* ===== FOOTER ===== */
+    footer { background: #060606; padding: 40px 0; border-top: 1px solid #111; }
+    .footer-inner { max-width: 1200px; margin: 0 auto; padding: 0 40px; display: flex; justify-content: space-between; align-items: center; }
+    .footer-logo img {
+      height: 48px;
+      width: auto;
+      display: block;
+    }
+    .footer-logo-text {
+      font-family: 'Oswald', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .footer-text { font-size: 12px; color: #333; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .hero-text h1 { font-size: 58px; }
+      .product-grid { grid-template-columns: repeat(2,1fr); }
+      .offer-grid { grid-template-columns: 1fr; }
+      .offer-left-img { height: 320px; }
+      .stat-strip-inner { grid-template-columns: repeat(2,1fr); }
+      .stat-item { border: none; border-bottom: 1px solid rgba(255,255,255,0.25); padding-bottom: 16px; }
+      .stat-item:last-child { border-bottom: none; }
+      .gallery-nav-btn { display: none; }
+    }
+    @media (max-width: 768px) {
+      nav { padding: 14px 20px; }
+      .nav-badge { display: none; }
+      .hero-inner { grid-template-columns: 1fr; gap: 36px; }
+      .hero-text h1 { font-size: 48px; }
+      .hero-form { padding: 20px; }
+      .hero-earnings-badge { display: none; }
+      .section-headline { font-size: 36px; }
+      .pain-cards { grid-template-columns: 1fr; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .steps-grid::before { display: none; }
+      .product-grid { grid-template-columns: repeat(2,1fr); }
+      .testimonial-grid { grid-template-columns: 1fr; }
+      .shipping-grid { grid-template-columns: 1fr; }
+      .howitworks .section-headline, .products .section-headline { font-size: 36px; }
+      .final-cta h2 { font-size: 42px; }
+      .guarantee-inner h2 { font-size: 38px; }
+      .footer-inner { flex-direction: column; gap: 10px; text-align: center; }
+      .hero-form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+<!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <a href="/index.html" class="logo-text">
+      <span class="white">ROST</span>
+      <span class="red-line">RAI$E</span>
+    </a>
+  </div>
+  <div class="nav-right">
+    <a href="/partner.html" class="nav-link">Work With Us</a>
+    <div class="nav-badge">No Credit Card — Ever</div>
+    <a href="/signup.html" class="btn-nav">Get My Team Store</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <h1 style="display:flex;flex-direction:column;gap:0;margin:0;padding:0;line-height:78px;">
+        <span style="display:block;margin-bottom:0;">Turn Your</span>
+        <span class="red" style="display:block;margin-bottom:0;">Team Roster</span>
+        <span style="display:block;margin-bottom:0;">Into a</span>
+        <span style="display:block;margin-bottom:0;">Fundraising</span>
+        <span style="display:block;">Machine</span>
+      </h1>
+      <p class="subhead">Custom koozies, spirit chains, hoodies, duffle bags & more — all printed with YOUR team's name. Parents shop through your team store. Your team earns per item sold. Nothing to stock. Nothing to deliver. Nothing to follow up on.</p>
+    </div>
+    <div class="hero-right">
+      <div class="hero-img-wrap">
+        <img src="work-example-1.jpg" alt="Youth sports team with custom gear" class="hero-img" onerror="this.style.display='none';this.parentElement.querySelector('.img-placeholder').style.display='flex'">
+        <div class="img-placeholder" style="display:none">
+          <svg viewBox="0 0 24 24" fill="#444"><path d="M12 2C8 2 5 5 5 9c0 3 2 6 5 8 1 .6 2 1.4 2 2.5V22h2v-2.5c0-1.1 1-1.9 2-2.5 3-2 5-5 5-8 0-4-3-7-7-7zm0 12c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"/></svg>
+          <span>Team Spirit Products</span>
+        </div>
+      </div>
+      <div class="hero-earnings-badge">
+        <div class="eb-amount">$3,400</div>
+        <div class="eb-label">Avg first-season<br>earnings per team</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HERO FORM -->
+<section id="hero-form" style="background:var(--black);padding:0 0 80px;">
+  <div style="max-width:1200px;margin:0 auto;padding:0 40px;">
+    <div class="hero-form">
+      <label class="hero-form-label">Start Your Team Store — Takes 2 Minutes</label>
+      <div class="hero-form-row">
+        <input class="form-input" type="text" placeholder="Your Name">
+        <input class="form-input" type="text" placeholder="Team / Organization Name">
+      </div>
+      <input class="form-input" type="email" placeholder="Email Address" style="margin-bottom:10px">
+      <input class="form-input" type="email" placeholder="Confirm Email Address" style="margin-bottom:10px">
+      <select class="form-select">
+        <option value="">Select Your Sport</option>
+        <option>Basketball</option><option>Football</option><option>Soccer</option>
+        <option>Baseball</option><option>Softball</option><option>Volleyball</option>
+        <option>Swimming</option><option>Track & Field</option><option>Lacrosse</option>
+        <option>Hockey</option><option>Tennis</option><option>Golf</option>
+        <option>Wrestling</option><option>Gymnastics</option><option>Cheerleading / Dance</option>
+        <option>Other Youth Sports</option>
+      </select>
+      <button class="btn-hero-cta">Start My Team Store →</button>
+      <p class="hero-trust"><span>250+ teams funded</span> &nbsp;|&nbsp; <span>No minimums</span> &nbsp;|&nbsp; <span>No credit card — ever</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- STAT STRIP -->
+<section class="stat-strip">
+  <div class="stat-strip-inner">
+    <div class="stat-item"><div class="stat-number">250+</div><div class="stat-label">Teams Enrolled</div></div>
+    <div class="stat-item"><div class="stat-number">$3,400</div><div class="stat-label">Avg First-Season Earnings</div></div>
+    <div class="stat-item"><div class="stat-number">200+</div><div class="stat-label">Custom Products</div></div>
+    <div class="stat-item"><div class="stat-number">48 hrs</div><div class="stat-label">Store Setup Time</div></div>
+  </div>
+</section>
+
+<!-- ROTATING GALLERY -->
+<section class="gallery-section">
+  <div class="container">
+    <div class="section-label">See Our Work</div>
+    <div class="section-headline">Teams Like Yours Are Already Earning</div>
+  </div>
+  <div class="gallery-outer">
+    <div class="gallery-carousel" id="galleryCarousel">
+      <div class="gallery-item"><img src="work-example-1.jpg" alt="Team store example" onerror="this.style.display='none'"></div>
+      <div class="gallery-item"><img src="work-example-2.jpg" alt="Team store example" onerror="this.style.display='none'"></div>
+      <div class="gallery-item"><img src="work-example-3.jpg" alt="Team store example" onerror="this.style.display='none'"></div>
+      <div class="gallery-item"><img src="work-example-4.jpg" alt="Team store example" onerror="this.style.display='none'"></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem">
+  <div class="container">
+    <div class="section-label">The Problem</div>
+    <div class="section-headline">Your Fans Want to Buy.<br>You're Just Not Offering.</div>
+    <p style="text-align:center;max-width:600px;margin:0 auto 50px;font-size:18px;color:#4B5563;line-height:1.7;">Traditional fundraisers trap your team with products nobody wants. RosterRaise flips that — parents shop gear they actually love, and your team earns from sales you didn't have to chase.</p>
+    <div class="pain-cards">
+      <div class="pain-card">
+        <div class="pain-icon">😓</div>
+        <h3>Your Fans Would Buy — If They Could.</h3>
+        <p>Every parent at your game has a phone and a kid on the field. They'd buy a koozie or hoodie right now if your team had a store. Nobody's offering.</p>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">💸</div>
+        <h3>You're Left Holding the Bag.</h3>
+        <p>Minimum orders, upfront costs, unsold inventory. Some teams spend $300 to make $200. That math doesn't work — and you still end up with boxes in your garage.</p>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">😤</div>
+        <h3>You're Doing All the Work.</h3>
+        <p>Generic products nobody asked for. The fundraiser catalog is a joke. You organize, you chase responses, you handle all the logistics — and your team barely earns anything.</p>
+      </div>
+    </div>
+    <div class="old-way">
+      <div class="old-way-label">The Old Way — Still Doesn't Work</div>
+      <h3>Catalogs. Car Washes. Cookie Dough.</h3>
+      <div class="old-way-items">
+        <div class="old-way-item"><span class="x">✗</span> Gift wrap nobody asked for</div>
+        <div class="old-way-item"><span class="x">✗</span> $500 minimum orders</div>
+        <div class="old-way-item"><span class="x">✗</span> Unsold inventory piling up</div>
+        <div class="old-way-item"><span class="x">✗</span> Parents with no way to buy</div>
+        <div class="old-way-item"><span class="x">✗</span> You handling all the logistics</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="howitworks">
+  <div class="container">
+    <div class="section-label">How It Works</div>
+    <div class="section-headline">Your Team Store Is Ready<br>in 3 Steps</div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-number">1</div>
+        <div class="step-time">Takes 2 minutes</div>
+        <h3>Submit Your Info</h3>
+        <p>Upload your team logo, name, sport, and colors. That's it. Our design team handles everything else — no design or tech experience needed on your end.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">2</div>
+        <div class="step-time">Ready in 48 hours</div>
+        <h3>We Build Your Store</h3>
+        <p>We create custom product mockups and your team's own branded storefront. You'll see exactly what your team's gear looks like before anything goes live.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">3</div>
+        <div class="step-time">Share and earn</div>
+        <h3>Parents Shop. Your Team Earns.</h3>
+        <p>Share your team store link with parents. Every item sold = a percentage back to your team. We ship directly to buyers. You focus on coaching your team.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="products">
+  <div class="container">
+    <div class="section-label">200+ Products — All Custom-Pressed</div>
+    <div class="section-headline">Gear That Parents<br>Actually Want to Buy</div>
+    <div class="product-grid">
+      <div class="product-card">
+        <img src="images/koozie-cans.jpg" alt="Custom team koozies" class="product-img" onerror="this.style.display='none'">
+        <div class="product-body">
+          <div class="product-name">Custom Koozies</div>
+          <div class="product-desc">Foam koozies printed with your team name. The game-day essential parents actually use and reuse.</div>
+          <div class="product-price">$2–5 per sale</div>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="images/spirit-keychain.jpg" alt="Custom spirit chains" class="product-img" onerror="this.style.display='none'">
+        <div class="product-body">
+          <div class="product-name">Spirit Chains</div>
+          <div class="product-desc">3D-printed spirit chains and keychains. Perfect for hanging from rearview mirrors, gym bags, and backpacks.</div>
+          <div class="product-price">$5–12 per sale</div>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="images/custom-hoodie.jpg" alt="Custom team hoodies" class="product-img" onerror="this.style.display='none'">
+        <div class="product-body">
+          <div class="product-name">Custom Hoodies</div>
+          <div class="product-desc">Premium printed hoodies. Parents wear them all season long — a walking billboard for your team.</div>
+          <div class="product-price">$15–35 per sale</div>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="images/sports-bag.jpg" alt="Custom team bags and duffles" class="product-img" onerror="this.style.display='none'">
+        <div class="product-body">
+          <div class="product-name">Bags & Duffles</div>
+          <div class="product-desc">Custom backpacks and duffle bags. Durable gear that parents and kids use every week.</div>
+          <div class="product-price">$10–25 per sale</div>
+        </div>
+      </div>
+    </div>
+    <p class="products-note">+ Water bottles, decals, koozie wraps, window clings & more — all custom to YOUR team</p>
+  </div>
+</section>
+
+<!-- WHAT YOU GET -->
+<section class="whatyouget">
+  <div class="container">
+    <div class="section-label">The Offer</div>
+    <div class="section-headline">Everything You Need to<br>Launch Your Store</div>
+    <div class="offer-grid">
+      <div class="offer-left">
+        <img src="images/youth-fundraiser.jpg" alt="Youth sports team fundraising" class="offer-left-img" onerror="this.style.display='none'">
+      </div>
+      <div class="offer-right">
+        <h3>Everything Included in Your Team Store</h3>
+        <ul class="offer-list">
+          <li>
+            <div class="check"><svg viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>
+            <div class="text"><strong>Custom team storefront</strong> — designed around YOUR logo, colors, and team name. Professional look, not a generic template.</div>
+          </li>
+          <li>
+            <div class="check"><svg viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>
+            <div class="text"><strong>200+ custom products</strong> — koozies, spirit chains, hoodies, duffle bags, water bottles, decals & more</div>
+          </li>
+          <li>
+            <div class="check"><svg viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>
+            <div class="text"><strong>Product mockups before launch</strong> — see exactly what your team's gear looks like before any sale is made</div>
+          </li>
+          <li>
+            <div class="check"><svg viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>
+            <div class="text"><strong>Marketing kit included</strong> — ready-to-post social graphics, email copy, and parent messages you can share in 60 seconds</div>
+          </li>
+          <li>
+            <div class="check"><svg viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>
+            <div class="text"><strong>Real-time earnings dashboard</strong> — track every sale and your team's running total live as parents shop</div>
+          </li>
+          <li>
+            <div class="check"><svg viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>
+            <div class="text"><strong>We handle production, shipping & customer service</strong> — you never touch a single package or deal with a complaint</div>
+          </li>
+        </ul>
+        <div class="offer-note">
+          <div class="offer-note-badge">Optional Add-on</div>
+          <p><strong>Want physical samples?</strong> Order a kit of your team's actual products to show at games, parent meetings, and pep rallies. Entirely optional — not required to get started or earn.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF -->
+<section class="socialproof">
+  <div class="container">
+    <div class="section-label">Real Teams. Real Results.</div>
+    <div class="section-headline">What Coaches Are Saying</div>
+    <div class="testimonial-grid">
+      <div class="testimonial">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Our soccer club raised <strong>$2,100 in our first season</strong>. I didn't have to beg a single parent — they just shared the link. The store looked incredibly professional."</p>
+        <div class="testimonial-meta">
+          <div class="testimonial-avatar">MT</div>
+          <div>
+            <div class="testimonial-name">Coach Michelle T.</div>
+            <div class="testimonial-role">Riverside Youth Soccer — 3 seasons</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"I actually enjoyed the fundraising process for the first time ever. Parents bought koozies at our first game and immediately asked where to get more."</p>
+        <div class="testimonial-meta">
+          <div class="testimonial-avatar">MD</div>
+          <div>
+            <div class="testimonial-name">Marcus D.</div>
+            <div class="testimonial-role">Girls Basketball Booster, Austin TX</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"We hit our <strong>$3,000 goal before the season even started</strong>. Kids love seeing their team name on the spirit chains. Parents bought for extended family too."</p>
+        <div class="testimonial-meta">
+          <div class="testimonial-avatar">JP</div>
+          <div>
+            <div class="testimonial-name">AD Jay P.</div>
+            <div class="testimonial-role">Northlake High School Football</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GUARANTEE -->
+<section class="guarantee">
+  <div class="guarantee-inner">
+    <h2>Zero Risk. 100% Backed.</h2>
+    <p>If your team store doesn't generate at least $200 in sales within the first 30 days, we'll refund your sample kit in full — no questions asked. You have nothing to lose.</p>
+    <div class="guarantee-badge">
+      <svg viewBox="0 0 24 24" fill="white"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+      <p>100% Satisfaction Guarantee — No Downside Risk</p>
+    </div>
+  </div>
+</section>
+
+<!-- SHIPPING & FULFILLMENT -->
+<section class="shipping">
+  <div class="container">
+    <div class="section-label">Fulfillment</div>
+    <div class="section-headline">We Handle Everything<br>After They Order</div>
+    <div class="shipping-grid">
+      <div class="shipping-card">
+        <div class="shipping-icon">
+          <svg width="28" height="28" fill="#E63946" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14l-5-5 1.41-1.41L12 14.17l4.59-4.59L18 11l-6 6z"/></svg>
+        </div>
+        <h3>Production</h3>
+        <p>Every product is made custom for your team — printed, embroidered, or crafted to order. No generic stock items ever ship. Your team's logo, your colors, done right.</p>
+      </div>
+      <div class="shipping-card">
+        <div class="shipping-icon">
+          <svg width="28" height="28" fill="#E63946" viewBox="0 0 24 24"><path d="M18 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM19.5 9.5l1.96 2.36L17 15H7l5.5-7-1.5-2 3.5 4h5zM12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/></svg>
+        </div>
+        <h3>Shipping</h3>
+        <p>Orders ship within 3-5 business days directly to every buyer's door. No coordinating pickup. No storage in your garage. No follow-up calls. Just share the link.</p>
+      </div>
+      <div class="shipping-card">
+        <div class="shipping-icon">
+          <svg width="28" height="28" fill="#E63946" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-3 12H7v-2h10v2zm0-4H7V8h10v2z"/></svg>
+        </div>
+        <h3>Customer Service</h3>
+        <p>We handle every question, return, and issue directly with the customer. Your name stays clean. Your focus stays on your team.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="container">
+    <div class="section-label">Questions</div>
+    <div class="section-headline">Frequently Asked<br>Questions</div>
+    <div class="faq-list" id="faqList">
+      <div class="faq-item">
+        <div class="faq-question">
+          How long does it take to set up our team store?
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">After you submit your logo and team information, your custom store is typically live within 48 hours. You'll receive mockup previews so you can see exactly what your products look like before anything goes public.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          Is there a minimum number of items that have to sell?
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">No. Unlike traditional fundraisers, you don't pre-sell, commit to quantities, or pay upfront. There is no minimum. Sales happen organically through your store, and your team earns on every item sold.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          How much does it cost to get started?
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">$0 to set up your team store. The sample kit is entirely optional — order only if you want physical products to show at games and parent events. Getting started costs nothing.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          Do parents have to coordinate pickup or delivery?
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Never. Every order ships directly to the buyer's door — whether that's a parent, grandparent, aunt, or uncle. No coordinating bulky pickup orders. No storage in your garage.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          Can we add more products after our store is live?
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Yes. We can add new products, colors, types, or designs at any time. You can also run limited drops for specific seasons, events, or tournaments.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          Who handles quality issues and returns?
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">We do. If anything is wrong with an order — wrong size, print issue, damage in shipping — we make it right directly with the customer. Your name never gets dragged into an unhappy conversation.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          Do you ship internationally?
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Currently all products ship within the United States only. We're working on expanding, but for now we're US-only to keep production fast and reliable for every team.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <div class="final-cta-inner">
+    <h2>Your Team Store<br>Is <span class="red">Waiting.</span></h2>
+    <p class="final-cta-sub">Join 250+ teams who stopped chasing and started earning.</p>
+    <p class="final-cta-note">No setup fee &nbsp;|&nbsp; 200+ products &nbsp;|&nbsp; Ships within 48 hours &nbsp;|&nbsp; No minimums</p>
+    <a href="/signup.html" class="final-cta-btn">Start My Team Store →</a>
+    <p class="final-cta-trust">No credit card. No commitment. No catches.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo"><a href="/index.html" class="footer-logo-text"><span class="white">ROST</span><span class="red-line">RAI$E</span></a></div>
+    <div class="footer-text">© 2025 RosterRaise. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  // FAQ accordion — plain JS, no inline handlers
+  // Toggle shows + when closed, − when open. JS swaps textContent.
+  document.getElementById('faqList').addEventListener('click', function(e) {
+    const question = e.target.closest('.faq-question');
+    if (!question) return;
+    const item = question.parentElement;
+    const isOpen = item.classList.contains('is-open');
+    const toggle = question.querySelector('.faq-toggle');
+
+    // Close all and reset all toggles to +
+    document.querySelectorAll('.faq-item').forEach(i => {
+      i.classList.remove('is-open');
+      i.querySelector('.faq-toggle').textContent = '+';
+    });
+
+    // Open clicked one if it was closed, show −
+    if (!isOpen) {
+      item.classList.add('is-open');
+      toggle.textContent = '−';
+    }
+  });
+
+  // Gallery auto-rotate carousel
+  const carousel = document.getElementById('galleryCarousel');
+  if (carousel) {
+    const items = Array.from(carousel.querySelectorAll('.gallery-item'));
+    let current = 0;
+
+    function setActive(idx) {
+      items.forEach((item, i) => {
+        item.classList.remove('active', 'prev', 'next');
+        if (i === idx) item.classList.add('active');
+        else if (i === (idx - 1 + items.length) % items.length) item.classList.add('prev');
+        else if (i === (idx + 1) % items.length) item.classList.add('next');
+      });
+    }
+
+    setActive(0);
+
+    let autoRotate = setInterval(() => {
+      current = (current + 1) % items.length;
+      setActive(current);
+    }, 8000);
+
+    carousel.addEventListener('mouseenter', () => clearInterval(autoRotate));
+    carousel.addEventListener('mouseleave', () => {
+      autoRotate = setInterval(() => {
+        current = (current + 1) % items.length;
+        setActive(current);
+      }, 8000);
+    });
+  }
+</script>
+
+</body>
+</html>
