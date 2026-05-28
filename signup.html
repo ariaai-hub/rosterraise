@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Get Your Team Store — RosterRaise</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --red: #E63946;
+      --red-dark: #9B1C1C;
+      --black: #0A0A0A;
+      --white: #FFFFFF;
+      --off-white: #F5F5F5;
+      --gray-light: #E5E5E5;
+      --gray: #9CA3AF;
+      --gray-dark: #4B5563;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--black);
+      background: var(--off-white);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+    img { max-width: 100%; display: block; }
+    .container { max-width: 680px; margin: 0 auto; padding: 0 40px; }
+
+    /* NAV */
+nav {
+      background: var(--black);
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid #1E1E1E;
+      min-height: 100px;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+    }
+    .nav-logo img { width: 300px; height: auto; display: block; }
+    .nav-logo .logo-text {
+      font-family: 'Oswald', sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      line-height: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .nav-logo .logo-text .white { color: var(--white); }
+    .nav-logo .logo-text .red-line { color: var(--red); }
+    .nav-back {
+      color: #A1A1AA;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--white); }
+
+    /* PAGE HERO */
+    .page-hero {
+      background: var(--black);
+      padding: 80px 0 60px;
+      text-align: center;
+    }
+    .page-hero .eyebrow {
+      color: var(--red);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .page-hero h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 52px;
+      font-weight: 700;
+      color: var(--white);
+      text-transform: uppercase;
+      line-height: 1.05;
+      margin-bottom: 20px;
+    }
+    .page-hero p {
+      color: #A1A1AA;
+      font-size: 17px;
+      line-height: 1.7;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* FORM SECTION */
+    .form-section {
+      padding: 60px 0 80px;
+    }
+    .form-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 48px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    .form-row.single { grid-template-columns: 1fr; }
+
+    .form-group { margin-bottom: 20px; }
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--red);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .form-group label .optional {
+      font-weight: 400;
+      color: #71717A;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      background: #1A1A1A;
+      border: 1px solid #2A2A2A;
+      border-radius: 6px;
+      padding: 13px 40px 13px 16px;
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+      color: var(--red);
+      transition: border-color 0.2s;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23E63946' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: var(--red); opacity: 0.5; }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--red);
+    }
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+    .form-group select { color: #888; cursor: pointer; }
+    .form-group select option { background: #1A1A1A; color: #aaa; }
+    .form-group select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%239CA3AF' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      padding-right: 40px;
+    }
+
+    /* LOGO UPLOAD */
+    .logo-upload-group { margin-bottom: 24px; }
+    .logo-upload-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .logo-upload-label label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--black);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .logo-upload-label .optional {
+      font-weight: 400;
+      color: var(--gray);
+      text-transform: none;
+      letter-spacing: 0;
+    }
+    .skip-logo-btn {
+      background: none;
+      border: none;
+      color: var(--red);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: underline;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+    .skip-logo-btn:hover { color: var(--red-dark); }
+
+    .logo-drop-zone {
+      border: 2px dashed var(--gray-light);
+      border-radius: 12px;
+      padding: 40px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      position: relative;
+    }
+    .logo-drop-zone:hover,
+    .logo-drop-zone.dragover {
+      border-color: var(--red);
+      background: rgba(230,57,70,0.03);
+    }
+    .logo-drop-zone.has-file { border-color: var(--red); background: rgba(230,57,70,0.05); }
+    .logo-drop-zone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+    .logo-drop-zone .dz-icon {
+      font-size: 36px;
+      margin-bottom: 12px;
+    }
+    .logo-drop-zone .dz-text {
+      font-size: 15px;
+      color: var(--gray-dark);
+      margin-bottom: 6px;
+    }
+    .logo-drop-zone .dz-text strong { color: var(--red); }
+    .logo-drop-zone .dz-hint {
+      font-size: 12px;
+      color: var(--gray);
+    }
+    .logo-drop-zone .dz-filename {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--red);
+      margin-top: 8px;
+    }
+    .logo-drop-zone.pending .dz-icon,
+    .logo-drop-zone.pending .dz-text,
+    .logo-drop-zone.pending .dz-hint { display: none; }
+    .logo-drop-zone.pending .dz-pending {
+      display: block;
+      font-size: 14px;
+      color: var(--gray-dark);
+    }
+    .logo-drop-zone.pending .dz-pending strong { color: var(--red); }
+    .logo-drop-zone .dz-pending { display: none; }
+
+    /* SUBMIT */
+    .btn-submit {
+      width: 100%;
+      background: var(--red);
+      color: var(--white);
+      border: none;
+      padding: 18px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: background 0.2s, transform 0.2s;
+      margin-top: 8px;
+    }
+    .btn-submit:hover { background: var(--red-dark); transform: translateY(-1px); }
+    .btn-submit:disabled { background: var(--gray); cursor: not-allowed; transform: none; }
+
+    .form-note {
+      text-align: center;
+      margin-top: 16px;
+      font-size: 13px;
+      color: var(--gray);
+    }
+
+    /* LOGO MODAL */
+    .logo-modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .logo-modal-overlay.show { display: flex; }
+    .logo-modal {
+      background: #fff;
+      border-radius: 16px;
+      padding: 40px;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    .logo-modal-icon { font-size: 48px; margin-bottom: 16px; }
+    .logo-modal h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin: 0 0 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .logo-modal p {
+      font-size: 15px;
+      color: #555;
+      margin: 0 0 28px;
+      line-height: 1.5;
+    }
+    .logo-modal-btn {
+      background: var(--red);
+      color: #fff;
+      border: none;
+      padding: 14px 32px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .logo-modal-btn:hover { background: var(--red-dark); transform: translateY(-1px); }
+    .logo-modal-cancel {
+      display: block;
+      margin-top: 12px;
+      font-size: 13px;
+      color: var(--gray);
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    .logo-modal-cancel:hover { color: var(--text-dark); }
+
+    /* SUCCESS STATE */
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 60px 40px;
+    }
+    .form-success.show { display: block; }
+    .form-success .success-icon {
+      width: 72px;
+      height: 72px;
+      background: rgba(230,57,70,0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      font-size: 32px;
+    }
+    .form-success h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 36px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .form-success p {
+      color: var(--gray-dark);
+      font-size: 16px;
+      line-height: 1.7;
+      max-width: 400px;
+      margin: 0 auto 32px;
+    }
+    .form-success .btn-home {
+      display: inline-block;
+      background: var(--black);
+      color: var(--white);
+      padding: 14px 32px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: background 0.2s;
+    }
+    .form-success .btn-home:hover { background: #222; }
+
+    /* NOTE CALLOUT */
+    .branding-note-hint {
+      background: #FEF9EC;
+      border: 1px solid #FDE68A;
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-size: 13px;
+      color: #92400E;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .branding-note-hint strong { color: #B45309; }
+
+    @media (max-width: 640px) {
+      .form-row { grid-template-columns: 1fr; }
+      .form-card { padding: 32px 24px; }
+      .page-hero h1 { font-size: 38px; }
+      nav { padding: 14px 24px; }
+      .container { padding: 0 24px; }
+    }
+  </style>
+<!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <a href="/index.html" class="logo-text">
+      <span class="white">ROST</span>
+      <span class="red-line">RAI$E</span>
+    </a>
+  </div>
+  <a href="/index.html" class="nav-back">← Back to Home</a>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="eyebrow">Get Started</div>
+    <h1>Set Up Your<br>Team Store</h1>
+    <p>We build your store and send it to you for approval before it goes live. No credit card. No catch.</p>
+  </div>
+</section>
+
+<!-- FORM -->
+<section class="form-section">
+  <div class="container">
+    <div class="form-card">
+
+      <!-- SUCCESS -->
+      <div class="form-success" id="formSuccess">
+        <div class="success-icon">✓</div>
+        <h3>You're In!</h3>
+        <p>We've got your submission. We'll have your team store ready within 48 hours and will be in touch if we need anything.</p>
+        <a href="/index.html" class="btn-home">Back to Home</a>
+      </div>
+
+      <!-- ACTUAL FORM -->
+      <form id="signupForm" novalidate>
+
+        <!-- TEAM INFO -->
+        <div class="form-row">
+          <div class="form-group">
+            <label>Team Name</label>
+            <input type="text" name="team_name" placeholder="e.g. Riverside Tigers" required>
+          </div>
+          <div class="form-group">
+            <label>Sport / Activity</label>
+            <select name="sport" required>
+              <option value="" disabled selected>Select a sport</option>
+              <option>Baseball</option>
+              <option>Basketball</option>
+              <option>Cheerleading</option>
+              <option>Cross Country</option>
+              <option>Dance / Dance Team</option>
+              <option>Field Hockey</option>
+              <option>Football</option>
+              <option>Golf</option>
+              <option>Gymnastics</option>
+              <option>Hockey</option>
+              <option>Lacrosse</option>
+              <option>Martial Arts</option>
+              <option>Pom & Dance</option>
+              <option>Soccer</option>
+              <option>Softball</option>
+              <option>Swimming & Diving</option>
+              <option>Track & Field</option>
+              <option>Volleyball</option>
+              <option>Wrestling</option>
+              <option>Youth / Rec League</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Organization / School Name</label>
+            <input type="text" name="org_name" placeholder="e.g. Riverside High School" required>
+          </div>
+          <div class="form-group">
+            <label>Team Colors <span class="optional">(optional)</span></label>
+            <input type="text" name="colors" placeholder="e.g. Navy blue and gold">
+          </div>
+        </div>
+
+        <!-- CONTACT INFO -->
+        <div class="form-row">
+          <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" name="contact_name" placeholder="e.g. Marcus Johnson" required>
+          </div>
+          <div class="form-group">
+            <label>Your Email</label>
+            <input type="email" name="email" placeholder="you@example.com" required>
+          </div>
+        </div>
+
+        <div class="form-row single">
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" name="phone" placeholder="(555) 867-5309" required>
+          </div>
+        </div>
+
+        <!-- LOGO UPLOAD -->
+        <div class="logo-upload-group">
+          <div class="logo-upload-label">
+            <label>Team Logo</label>
+          </div>
+
+          <div class="logo-drop-zone" id="logoDropZone">
+            <input type="file" name="logo_file" id="logoInput" accept="image/*">
+            <div class="dz-icon">📁</div>
+            <div class="dz-text">Drag and drop your logo here, or <strong>click to browse</strong></div>
+            <div class="dz-hint">PNG, JPG, SVG — any format works</div>
+            <div class="dz-filename" id="dzFilename"></div>
+            <div class="dz-pending">Logo will be added later. <strong>We'll follow up to get it.</strong></div>
+          </div>
+
+          <!-- Branding note shown when logo skipped -->
+          <div class="branding-note-hint" id="brandingHint" style="display:none; margin-top: 12px;">
+            <strong>No logo? No problem.</strong> Describe your team branding here — colors, mascot, fonts, any specific look you have in mind — and we'll work from that. You can send your logo later when you have it.
+          </div>
+        </div>
+
+        <!-- BRANDING NOTES — shown when logo is skipped or always available -->
+        <div class="form-group" id="brandingGroup">
+          <label>Branding Notes <span class="optional">(optional — skip if uploading a logo)</span></label>
+          <textarea name="branding_notes" placeholder="Colors, mascot, fonts, or any details about your team look. The more the better — we want your store to feel like YOUR team."></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit" id="submitBtn">Get My Team Store →</button>
+        <p class="form-note">No credit card. We'll reach out within 48 hours.</p>
+
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Logo skip modal -->
+<div class="logo-modal-overlay" id="logoModal">
+  <div class="logo-modal">
+    <div class="logo-modal-icon">📋</div>
+    <h3>No Logo? No Problem.</h3>
+    <p>You can skip the logo for now — just click below and we'll follow up to get it before your store goes live.</p>
+    <button type="button" class="logo-modal-btn" id="logoModalConfirm">I'll Upload It Later</button>
+    <span class="logo-modal-cancel" id="logoModalCancel">Go back and upload a logo</span>
+  </div>
+</div>
+
+<script>
+  const form = document.getElementById('signupForm');
+  const logoDropZone = document.getElementById('logoDropZone');
+  const logoInput = document.getElementById('logoInput');
+  const dzFilename = document.getElementById('dzFilename');
+  const brandingHint = document.getElementById('brandingHint');
+  const brandingGroup = document.getElementById('brandingGroup');
+  const submitBtn = document.getElementById('submitBtn');
+  const formSuccess = document.getElementById('formSuccess');
+  const logoModal = document.getElementById('logoModal');
+  const logoModalConfirm = document.getElementById('logoModalConfirm');
+  const logoModalCancel = document.getElementById('logoModalCancel');
+
+  let fileSelected = false;
+  let logoSkipped = false;
+
+  // Logo modal — show when user tries to submit without a logo
+  logoModalConfirm.addEventListener('click', () => {
+    logoSkipped = true;
+    logoDropZone.classList.add('pending');
+    logoDropZone.classList.remove('has-file');
+    logoInput.value = '';
+    dzFilename.textContent = '';
+    brandingHint.style.display = 'block';
+    brandingGroup.querySelector('textarea').focus();
+    logoModal.classList.remove('show');
+  });
+
+  logoModalCancel.addEventListener('click', () => {
+    logoModal.classList.remove('show');
+  });
+
+  logoModal.addEventListener('click', (e) => {
+    if (e.target === logoModal) logoModal.classList.remove('show');
+  });
+
+  // File selected via drop or click
+  logoInput.addEventListener('change', () => {
+    if (logoInput.files.length > 0) {
+      handleFile(logoInput.files[0]);
+    }
+  });
+
+  logoDropZone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    logoDropZone.classList.add('dragover');
+  });
+  logoDropZone.addEventListener('dragleave', () => {
+    logoDropZone.classList.remove('dragover');
+  });
+  logoDropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    logoDropZone.classList.remove('dragover');
+    if (e.dataTransfer.files.length > 0) {
+      handleFile(e.dataTransfer.files[0]);
+    }
+  });
+
+  function handleFile(file) {
+    if (!file.type.startsWith('image/')) return;
+    logoSkipped = false;
+    fileSelected = true;
+    logoDropZone.classList.remove('pending');
+    logoDropZone.classList.add('has-file');
+    dzFilename.textContent = file.name;
+    brandingHint.style.display = 'none';
+  }
+
+  // Form submit — validate and show modal if no logo
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const required = ['team_name', 'sport', 'org_name', 'contact_name', 'email', 'phone'];
+    let valid = true;
+    required.forEach(name => {
+      const field = form.querySelector(`[name="${name}"]`);
+      if (!field.value.trim()) {
+        field.style.borderColor = '#E63946';
+        valid = false;
+        field.addEventListener('input', () => { field.style.borderColor = ''; }, { once: true });
+      }
+    });
+
+    if (!valid) return;
+
+    // If no logo selected and hasn't skipped yet, show modal
+    if (!fileSelected && !logoSkipped) {
+      logoModal.classList.add('show');
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
+
+    const formData = new FormData(form);
+    const payload = {};
+    formData.forEach((value, key) => { payload[key] = value; });
+    payload.logo_status = fileSelected ? 'uploaded' : (logoSkipped ? 'pending' : 'none');
+
+    console.log('Signup payload:', payload);
+
+    form.style.display = 'none';
+    formSuccess.classList.add('show');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+
+</body>
+</html>
