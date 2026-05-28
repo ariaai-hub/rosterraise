@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RosterRaise — You're In! Let's Set Up Your Store</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --red: #E63946;
+      --red-dark: #9B1C1C;
+      --black: #0A0A0A;
+      --white: #FFFFFF;
+      --off-white: #F5F5F5;
+      --dark-card: #141414;
+      --gray-light: #E5E5E5;
+      --gray: #9CA3AF;
+      --gray-dark: #4B5563;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--black);
+      background: var(--white);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; display: block; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+
+    /* ===== NAV ===== */
+    nav {
+      background: var(--black);
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid #1E1E1E;
+      min-height: 100px;
+    }
+    .nav-logo { display: flex; align-items: center; }
+    .nav-logo a { display: flex; align-items: center; text-decoration: none; }
+    .nav-logo img { width: 280px; height: auto; display: block; }
+    .nav-right { display: flex; align-items: center; gap: 20px; }
+    .nav-badge {
+      background: rgba(230,57,70,0.12);
+      border: 1px solid rgba(230,57,70,0.4);
+      color: var(--red);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 5px 14px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .btn-nav {
+      background: var(--red);
+      color: var(--white);
+      border: none;
+      padding: 10px 24px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      border-radius: 4px;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-nav:hover { background: var(--red-dark); transform: translateY(-1px); }
+    .nav-link { color: #A1A1AA; font-size: 13px; font-weight: 500; text-decoration: none; transition: color 0.2s; }
+    .nav-link:hover { color: var(--white); }
+
+    /* ===== MOBILE NAV ===== */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      z-index: 200;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+    .nav-hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.active span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: var(--black);
+      z-index: 150;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+    }
+    .mobile-menu.active { display: flex; }
+    .mobile-menu a {
+      font-family: 'Oswald', sans-serif;
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--white);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: color 0.2s;
+    }
+    .mobile-menu a:hover { color: var(--red); }
+
+    /* ===== COOKIE CONSENT ===== */
+    .cookie-banner {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: #111;
+      border-top: 1px solid #2A2A2A;
+      padding: 18px 24px;
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .cookie-banner.show { display: flex; }
+    .cookie-banner-text { font-size: 13px; color: #A1A1AA; flex: 1; min-width: 260px; }
+    .cookie-banner-text a { color: var(--red); text-decoration: underline; }
+    .cookie-banner-btns { display: flex; gap: 10px; flex-shrink: 0; }
+    .cookie-btn {
+      padding: 9px 20px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 4px;
+      cursor: pointer;
+      border: none;
+      font-family: 'Inter', sans-serif;
+      transition: background 0.2s;
+    }
+    .cookie-btn-accept { background: var(--red); color: var(--white); }
+    .cookie-btn-accept:hover { background: var(--red-dark); }
+    .cookie-btn-decline { background: transparent; color: #A1A1AA; border: 1px solid #333; }
+    .cookie-btn-decline:hover { border-color: #555; color: var(--white); }
+
+    /* ===== HERO ===== */
+    .hero {
+      background: var(--black);
+      padding: 100px 0 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -250px;
+      right: -250px;
+      width: 700px;
+      height: 700px;
+      background: var(--red);
+      border-radius: 50%;
+      opacity: 0.07;
+    }
+    .hero-inner {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 40px;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-check {
+      width: 80px;
+      height: 80px;
+      background: var(--red);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 28px;
+    }
+    .hero-check svg { width: 40px; height: 40px; fill: white; }
+    .hero h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 64px;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.1;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .hero h1 .red { color: var(--red); }
+    .hero .subhead {
+      font-size: 20px;
+      color: #A1A1AA;
+      line-height: 1.6;
+      margin-bottom: 0;
+    }
+
+    /* ===== VIDEO ===== */
+    .video-section {
+      background: var(--black);
+      padding: 20px 0 80px;
+      text-align: center;
+    }
+    .video-wrap {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+    .video-wrap iframe {
+      width: 100%;
+      aspect-ratio: 16/9;
+      border-radius: 12px;
+      border: 2px solid #2A2A2A;
+      background: #111;
+    }
+    .video-download {
+      display: inline-block;
+      margin-top: 18px;
+      color: var(--red);
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px solid var(--red);
+      padding: 8px 20px;
+      border-radius: 6px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .video-download:hover { background: var(--red); color: var(--white); text-decoration: none; }
+
+    /* ===== NEXT STEPS ===== */
+    .next-steps {
+      background: var(--off-white);
+      padding: 80px 0;
+    }
+    .section-label { text-align: center; font-size: 12px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--red); margin-bottom: 14px; }
+    .section-headline { text-align: center; font-family: 'Oswald', sans-serif; font-size: 48px; font-weight: 700; text-transform: uppercase; margin-bottom: 50px; line-height: 1.1; }
+    .steps-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 32px; max-width: 1000px; margin: 0 auto; padding: 0 40px; }
+    .step-item { text-align: center; }
+    .step-icon {
+      width: 72px;
+      height: 72px;
+      background: var(--black);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 18px;
+      border: 2px solid #2A2A2A;
+    }
+    .step-icon svg { width: 32px; height: 32px; fill: var(--red); }
+    .step-item h3 { font-family: 'Oswald', sans-serif; font-size: 18px; text-transform: uppercase; margin-bottom: 8px; }
+    .step-item p { font-size: 14px; color: var(--gray-dark); line-height: 1.6; }
+
+    /* ===== TEAM URL BOX ===== */
+    .url-section {
+      background: var(--black);
+      padding: 80px 0;
+      text-align: center;
+    }
+    .url-section h2 { font-family: 'Oswald', sans-serif; font-size: 42px; color: var(--white); text-transform: uppercase; margin-bottom: 12px; }
+    .url-section .url-sub { font-size: 16px; color: #71717A; margin-bottom: 36px; }
+    .url-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: #1A1A1A;
+      border: 1px solid #2A2A2A;
+      border-radius: 8px;
+      padding: 16px 20px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .url-box code {
+      font-family: 'Inter', sans-serif;
+      font-size: 18px;
+      color: var(--red);
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    .copy-btn {
+      background: var(--red);
+      color: var(--white);
+      border: none;
+      padding: 8px 18px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+    .copy-btn:hover { background: var(--red-dark); }
+    .copy-btn.copied { background: #22c55e; }
+
+    /* ===== COMMISSION CARD ===== */
+    .commission-section { background: var(--off-white); padding: 80px 0; text-align: center; }
+    .commission-card {
+      background: var(--black);
+      border: 2px solid var(--red);
+      border-radius: 16px;
+      padding: 48px 40px;
+      max-width: 560px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .comm-tag {
+      display: inline-block;
+      background: var(--red);
+      color: var(--white);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 14px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      align-self: flex-start;
+    }
+    .comm-amount {
+      font-family: 'Oswald', sans-serif;
+      font-size: 72px;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1;
+    }
+    .comm-desc { font-size: 18px; color: #A1A1AA; }
+    .comm-note {
+      background: #1A1A1A;
+      border: 1px solid #2A2A2A;
+      border-radius: 8px;
+      padding: 16px 20px;
+      font-size: 14px;
+      color: #71717A;
+      line-height: 1.6;
+    }
+    .comm-note strong { color: var(--white); }
+
+    /* ===== PARTNER CTA ===== */
+    .partner-cta {
+      background: var(--black);
+      padding: 80px 0;
+      text-align: center;
+    }
+    .partner-cta-inner { max-width: 680px; margin: 0 auto; padding: 0 40px; }
+    .partner-cta h2 { font-family: 'Oswald', sans-serif; font-size: 52px; color: var(--white); text-transform: uppercase; margin-bottom: 14px; }
+    .partner-cta h2 .red { color: var(--red); }
+    .partner-cta p { font-size: 18px; color: #71717A; margin-bottom: 32px; line-height: 1.65; }
+    .partner-cta .cta-btn {
+      background: var(--red);
+      color: var(--white);
+      border: none;
+      padding: 18px 48px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      border-radius: 6px;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .partner-cta .cta-btn:hover { background: var(--red-dark); transform: translateY(-2px); }
+
+    /* ===== FOOTER ===== */
+    footer { background: #060606; padding: 40px 0; border-top: 1px solid #111; }
+    .footer-inner { max-width: 1200px; margin: 0 auto; padding: 0 40px; display: flex; justify-content: space-between; align-items: center; }
+    .footer-logo a { text-decoration: none; display: flex; align-items: center; gap: 10px; }
+    .footer-logo img { height: 48px; width: auto; display: block; }
+    .footer-text { font-size: 12px; color: #333; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      nav { padding: 14px 20px; }
+      .nav-right { display: none; }
+      .nav-hamburger { display: flex; }
+      .hero h1 { font-size: 42px; }
+      .hero .subhead { font-size: 17px; }
+      .steps-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
+      .url-box { flex-direction: column; gap: 10px; }
+      .url-box code { font-size: 15px; }
+      .commission-card { padding: 36px 24px; }
+      .comm-amount { font-size: 56px; }
+      .partner-cta h2 { font-size: 38px; }
+      .section-headline { font-size: 36px; }
+      .footer-inner { flex-direction: column; gap: 10px; text-align: center; }
+    }
+    @media (max-width: 480px) {
+      .steps-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <a href="/index.html">
+      <img src="/logo_nav.png" alt="RosterRaise">
+    </a>
+  </div>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-right">
+    <a href="/partner.html" class="nav-link">Work With Us</a>
+    <div class="nav-badge">No Credit Card — Ever</div>
+    <a href="/signup.html" class="btn-nav">Get My Team Store</a>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="/index.html" onclick="closeMobileMenu()">Home</a>
+  <a href="/partner.html" onclick="closeMobileMenu()">Work With Us</a>
+  <a href="/signup.html" onclick="closeMobileMenu()">Get My Team Store</a>
+</div>
+
+<!-- HERO CONFIRMATION -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-check">
+      <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+    </div>
+    <h1>Your Store Is<br><span class="red">Almost Live.</span></h1>
+    <p class="subhead">Check your inbox — we just sent your login link. Click the link to preview your team store, approve your mockups, and go live.</p>
+</section>
+</section>
+
+<!-- VIDEO SECTION -->
+<section class="video-section">
+  <div class="video-wrap">
+    <iframe id="jonVideo" src="" frameborder="0" allowfullscreen></iframe>
+    <br>
+    <a href="/jon_austin_sales_v2.mp4" class="video-download" download>Download Video</a>
+  </div>
+</section>
+
+<!-- NEXT STEPS -->
+<section class="next-steps">
+  <div class="section-label">Next Steps</div>
+  <div class="section-headline">Here's What Happens Next</div>
+  <div class="steps-grid">
+    <div class="step-item">
+      <div class="step-icon">
+        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+      </div>
+      <h3>1. Check Email</h3>
+      <p>Open the email we sent and click your unique login link to access your dashboard.</p>
+    </div>
+    <div class="step-item">
+      <div class="step-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2C8 2 5 5 5 9c0 3 2 6 5 8 1 .6 2 1.4 2 2.5V22h2v-2.5c0-1.1 1-1.9 2-2.5 3-2 5-5 5-8 0-4-3-7-7-7zm0 12c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"/></svg>
+      </div>
+      <h3>2. Preview Mockups</h3>
+      <p>You'll see exactly what your team's products look like before anything goes live.</p>
+    </div>
+    <div class="step-item">
+      <div class="step-icon">
+        <svg viewBox="0 0 24 24"><path d="M18 16l-4-4-4 4-1.5-1.5L13 15l-4-4-1.5 1.5L13 17l5-5.5L18 16zM5 3h14c1.1 0 2 .9 2 2v14c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2V5c0-1.1.9-2 2-2z"/></svg>
+      </div>
+      <h3>3. Approve & Go Live</h3>
+      <p>Approve your designs with one click. Your store goes live and you can start sharing immediately.</p>
+    </div>
+    <div class="step-item">
+      <div class="step-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+      </div>
+      <h3>4. Share & Earn</h3>
+      <p>Share your team store link with parents. Every sale earns your team 30% — automatically.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM URL -->
+<section class="url-section">
+  <h2>Your Team Store URL</h2>
+  <p class="url-sub">This is the link you'll share with parents, post on social media, and send home with kids.</p>
+  <div class="url-box">
+    <code>rosterraise.com/store/[YOURTEAM]</code>
+    <button class="copy-btn" id="copyBtn" onclick="copyUrl()">Copy Link</button>
+  </div>
+</section>
+
+<!-- COMMISSION CARD -->
+<section class="commission-section">
+  <div class="commission-card">
+    <div class="comm-tag">Team Earnings</div>
+    <div class="comm-amount">30%</div>
+    <div class="comm-desc">Team Commission on every sale</div>
+    <div class="comm-note">
+      <strong>Paid every 2 weeks</strong> — directly to your team. No invoicing, no chasing. We handle everything and send your earnings on a set schedule.
+    </div>
+  </div>
+</section>
+
+<!-- PARTNER CTA -->
+<section class="partner-cta">
+  <div class="partner-cta-inner">
+    <h2>Know a Team<br>That Could <span class="red">Earn More?</span></h2>
+    <p>Refer another coach or team administrator. If they sign up, you earn a bonus commission. It's a win for everyone — spread the word.</p>
+    <a href="/partner.html" class="cta-btn">Become a Partner →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <a href="/index.html">
+        <img src="/logo_footer.png" alt="RosterRaise">
+      </a>
+    </div>
+    <div class="footer-text">© 2025 RosterRaise. All rights reserved.</div>
+  </div>
+</footer>
+
+<!-- COOKIE CONSENT BANNЕР -->
+<div class="cookie-banner" id="cookieBanner">
+  <div class="cookie-banner-text">
+    We use cookies to improve your experience and analyze site traffic.
+    By clicking "Accept," you consent to our use of cookies.
+    <a href="/privacy.html">Learn more</a>
+  </div>
+  <div class="cookie-banner-btns">
+    <button class="cookie-btn cookie-btn-decline" onclick="rejectCookies()">Decline</button>
+    <button class="cookie-btn cookie-btn-accept" onclick="acceptCookies()">Accept</button>
+  </div>
+</div>
+
+<script>
+  // Copy URL button
+  function copyUrl() {
+    const url = 'rosterraise.com/store/[YOURTEAM]';
+    navigator.clipboard.writeText(url).then(function() {
+      var btn = document.getElementById('copyBtn');
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(function() {
+        btn.textContent = 'Copy Link';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  }
+
+  // Cookie banner
+  (function() {
+    var banner = document.getElementById('cookieBanner');
+    if (!banner) return;
+    if (localStorage.getItem('cookieConsent')) return;
+    banner.classList.add('show');
+
+    window.acceptCookies = function() {
+      localStorage.setItem('cookieConsent', 'accepted');
+      banner.classList.remove('show');
+    };
+    window.rejectCookies = function() {
+      localStorage.setItem('cookieConsent', 'declined');
+      banner.classList.remove('show');
+    };
+
+    var hamburger = document.getElementById('navHamburger');
+    var mobileMenu = document.getElementById('mobileMenu');
+    if (hamburger && mobileMenu) {
+      hamburger.addEventListener('click', function() {
+        hamburger.classList.toggle('active');
+        mobileMenu.classList.toggle('active');
+        document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+      });
+      window.closeMobileMenu = function() {
+        hamburger.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+  })();
+</script>
+
+</body>
+</html>
