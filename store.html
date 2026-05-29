@@ -384,6 +384,90 @@
       color: var(--gray-dark);
     }
 
+
+    /* ===== MOBILE NAV ===== */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      margin-left: auto;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--white);
+      transition: all 0.3s;
+    }
+    .nav-hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.active span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: var(--black);
+      z-index: 150;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+    }
+    .mobile-menu.active { display: flex; }
+    .mobile-menu a {
+      font-family: 'Oswald', sans-serif;
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--white);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: color 0.2s;
+    }
+    .mobile-menu a:hover { color: var(--red); }
+    /* ===== COOKIE CONSENT ===== */
+    .cookie-banner {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: #111;
+      border-top: 1px solid #2A2A2A;
+      padding: 18px 24px;
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .cookie-banner.show { display: flex; }
+    .cookie-banner-text {
+      font-size: 13px;
+      color: #A1A1AA;
+      flex: 1;
+      min-width: 260px;
+    }
+    .cookie-banner-text a { color: var(--red); text-decoration: underline; }
+    .cookie-banner-btns { display: flex; gap: 10px; flex-shrink: 0; }
+    .cookie-btn {
+      padding: 9px 20px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 4px;
+      cursor: pointer;
+      border: none;
+      font-family: 'Inter', sans-serif;
+      transition: background 0.2s;
+    }
+    .cookie-btn-accept { background: var(--red); color: var(--white); }
+    .cookie-btn-accept:hover { background: #c52d37; }
+    .cookie-btn-decline { background: transparent; color: #A1A1AA; border: 1px solid #333; }
+    .cookie-btn-decline:hover { border-color: #555; color: var(--white); }
+
     /* ===== RESPONSIVE ===== */
     @media (max-width: 768px) {
       .hero { padding: 60px 0 50px; }
@@ -566,22 +650,68 @@
     </div>
   </section>
 
-  <!-- COACH LOGIN -->
-  <section class="coach-section">
-
-
   <!-- FOOTER -->
   <footer>
     <div class="container">
       <div class="footer-logo">Lake Pointe <span>Football</span></div>
       <div class="footer-links">
-<a href="/store.html">Shop</a>
-      <a href="#leaderboard">Leaderboard</a>
-      <a href="#share">Share</a>
+        <a href="/store.html">Shop</a>
+        <a href="#leaderboard">Leaderboard</a>
+        <a href="#share">Share</a>
       </div>
       <p class="footer-copy">&copy; 2026 Lake Pointe Football. Powered by RosterRaise.</p>
     </div>
   </footer>
 
+  <!-- COOKIE CONSENT -->
+<div class="cookie-banner" id="cookieBanner">
+  <div class="cookie-banner-text">
+    We use cookies to improve your experience. By continuing, you agree to our <a href="/privacy.html">Privacy Policy</a>.
+  </div>
+  <div class="cookie-banner-btns">
+    <button class="cookie-btn cookie-btn-decline" onclick="rejectCookies()">Decline</button>
+    <button class="cookie-btn cookie-btn-accept" onclick="acceptCookies()">Accept</button>
+  </div>
+</div>
+
+<script>
+(function() {
+  function getCookie(name) {
+    var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    return match ? match[2] : null;
+  }
+  function showBanner() {
+    var banner = document.getElementById('cookieBanner');
+    if (banner) banner.classList.add('show');
+  }
+  window.acceptCookies = function() {
+    document.cookie = 'cookie_consent=accepted;path=/;max-age=31536000';
+    document.getElementById('cookieBanner').classList.remove('show');
+  };
+  window.rejectCookies = function() {
+    document.cookie = 'cookie_consent=declined;path=/;max-age=31536000';
+    document.getElementById('cookieBanner').classList.remove('show');
+  };
+  if (!getCookie('cookie_consent')) {
+    setTimeout(showBanner, 1500);
+  }
+  var hamburger = document.getElementById('navHamburger');
+  var mobileMenu = document.getElementById('mobileMenu');
+  if (hamburger && mobileMenu) {
+    hamburger.addEventListener('click', function() {
+      hamburger.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
+      document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+    });
+    window.closeMobileMenu = function() {
+      hamburger.classList.remove('active');
+      mobileMenu.classList.remove('active');
+      document.body.style.overflow = '';
+    };
+  }
+})();
+</script>
+
 </body>
+
 </html>
