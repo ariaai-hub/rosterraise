@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lake Pointe Football — Team Store</title>
+  <link rel="icon" type="image/png" href="/opt/data/rosterraise/logo_nav.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --red: #E63946;
+      --red-dark: #9B1C1C;
+      --black: #0A0A0A;
+      --black-card: #141414;
+      --black-border: #1E1E1E;
+      --white: #FFFFFF;
+      --off-white: #F5F5F5;
+      --gray-light: #E5E5E5;
+      --gray: #9CA3AF;
+      --gray-dark: #4B5563;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--black);
+      color: var(--white);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* ===== HERO ===== */
+    .hero {
+      background: linear-gradient(135deg, #0A0A0A 0%, #1A0A0A 100%);
+      border-bottom: 3px solid var(--red);
+      padding: 80px 0 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(ellipse at center top, rgba(230,57,70,0.15) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-logo {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 24px;
+      border-radius: 50%;
+      border: 3px solid var(--red);
+      background: var(--black-card);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Oswald', sans-serif;
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--red);
+      box-shadow: 0 0 40px rgba(230,57,70,0.3);
+    }
+    .hero h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(32px, 6vw, 56px);
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .hero h1 span { color: var(--red); }
+    .hero-sub {
+      font-size: 18px;
+      color: var(--gray);
+      margin-bottom: 8px;
+    }
+    .hero-tagline {
+      font-family: 'Oswald', sans-serif;
+      font-size: 22px;
+      color: var(--off-white);
+      letter-spacing: 1px;
+    }
+
+    /* ===== SECTION TITLES ===== */
+    .section-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: 28px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-align: center;
+      margin-bottom: 40px;
+      position: relative;
+    }
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 3px;
+      background: var(--red);
+      margin: 16px auto 0;
+    }
+
+    /* ===== PRODUCTS ===== */
+    .products-section {
+      padding: 60px 0;
+      background: var(--black);
+    }
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .product-card {
+      background: var(--black-card);
+      border: 1px solid var(--black-border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .product-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--red);
+    }
+    .product-image {
+      height: 200px;
+      background: linear-gradient(135deg, #1a1a1a 0%, #2a1a1a 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 64px;
+      border-bottom: 2px solid var(--red);
+    }
+    .product-info { padding: 20px; }
+    .product-name {
+      font-family: 'Oswald', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+    .product-desc {
+      font-size: 13px;
+      color: var(--gray);
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+    .product-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .product-price {
+      font-family: 'Oswald', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--red);
+    }
+    .buy-btn {
+      background: var(--red);
+      color: var(--white);
+      font-family: 'Oswald', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .buy-btn:hover { background: var(--red-dark); }
+
+    /* ===== LEADERBOARD ===== */
+    .leaderboard-section {
+      padding: 60px 0;
+      background: linear-gradient(180deg, var(--black) 0%, #0D0D0D 100%);
+    }
+    .leaderboard-table {
+      background: var(--black-card);
+      border: 1px solid var(--black-border);
+      border-radius: 12px;
+      overflow: hidden;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .leaderboard-header {
+      display: grid;
+      grid-template-columns: 60px 1fr 120px;
+      padding: 16px 24px;
+      background: var(--red);
+      font-family: 'Oswald', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .leaderboard-row {
+      display: grid;
+      grid-template-columns: 60px 1fr 120px;
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--black-border);
+      align-items: center;
+      transition: background 0.2s;
+    }
+    .leaderboard-row:last-child { border-bottom: none; }
+    .leaderboard-row:hover { background: #1a1a1a; }
+    .leaderboard-rank {
+      font-family: 'Oswald', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--red);
+    }
+    .leaderboard-rank.gold { color: #FFD700; }
+    .leaderboard-rank.silver { color: #C0C0C0; }
+    .leaderboard-rank.bronze { color: #CD7F32; }
+    .leaderboard-name {
+      font-weight: 500;
+      font-size: 15px;
+    }
+    .leaderboard-amount {
+      font-family: 'Oswald', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--off-white);
+      text-align: right;
+    }
+
+    /* ===== QR / SHARE ===== */
+    .share-section {
+      padding: 60px 0;
+      background: var(--black);
+    }
+    .share-card {
+      background: var(--black-card);
+      border: 1px solid var(--black-border);
+      border-radius: 16px;
+      padding: 40px;
+      max-width: 500px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .qr-placeholder {
+      width: 160px;
+      height: 160px;
+      background: var(--white);
+      border-radius: 12px;
+      margin: 0 auto 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: var(--black);
+      font-weight: 600;
+    }
+    .share-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+    .share-url {
+      background: #1a1a1a;
+      border: 1px solid var(--black-border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: var(--gray);
+      margin-bottom: 20px;
+      word-break: break-all;
+    }
+    .share-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+    .share-btn {
+      padding: 10px 24px;
+      border-radius: 8px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      border: none;
+      transition: opacity 0.2s;
+    }
+    .share-btn:hover { opacity: 0.85; }
+    .share-btn.copy { background: var(--gray-dark); color: var(--white); }
+    .share-btn.twitter { background: #1DA1F2; color: var(--white); }
+    .share-btn.facebook { background: #4267B2; color: var(--white); }
+
+    /* ===== COACH LOGIN ===== */
+    .coach-section {
+      padding: 60px 0;
+      background: linear-gradient(180deg, var(--black) 0%, #0D0D0D 100%);
+    }
+    .coach-card {
+      background: var(--black-card);
+      border: 2px solid var(--red);
+      border-radius: 16px;
+      padding: 40px;
+      max-width: 420px;
+      margin: 0 auto;
+      text-align: center;
+      box-shadow: 0 0 30px rgba(230,57,70,0.2);
+    }
+    .coach-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+    .coach-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
+    .coach-desc {
+      font-size: 14px;
+      color: var(--gray);
+      margin-bottom: 24px;
+    }
+    .coach-input {
+      width: 100%;
+      padding: 14px 16px;
+      background: #0A0A0A;
+      border: 1px solid var(--black-border);
+      border-radius: 8px;
+      color: var(--white);
+      font-size: 15px;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+    .coach-input::placeholder { color: var(--gray-dark); }
+    .coach-login-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--red);
+      color: var(--white);
+      font-family: 'Oswald', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .coach-login-btn:hover { background: var(--red-dark); }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #050505;
+      border-top: 1px solid var(--black-border);
+      padding: 40px 0 30px;
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: 'Oswald', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .footer-logo span { color: var(--red); }
+    .footer-links {
+      display: flex;
+      gap: 32px;
+      justify-content: center;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      font-size: 14px;
+      color: var(--gray);
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--red); }
+    .footer-copy {
+      font-size: 13px;
+      color: var(--gray-dark);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .hero { padding: 60px 0 50px; }
+      .hero-logo { width: 90px; height: 90px; font-size: 36px; }
+      .products-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+      .product-image { height: 150px; }
+      .leaderboard-header, .leaderboard-row {
+        grid-template-columns: 45px 1fr 90px;
+        padding: 12px 16px;
+      }
+      .leaderboard-rank { font-size: 16px; }
+      .leaderboard-name { font-size: 13px; }
+      .leaderboard-amount { font-size: 15px; }
+      .share-card, .coach-card { padding: 28px 24px; }
+      .share-buttons { flex-direction: column; }
+      .share-btn { width: 100%; }
+    }
+    @media (max-width: 480px) {
+      .container { padding: 0 16px; }
+      .products-grid { grid-template-columns: 1fr; }
+      .product-image { height: 180px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-logo">LP</div>
+      <h1>Lake Pointe <span>Football</span></h1>
+      <p class="hero-sub">Official Team Store &amp; Fundraiser</p>
+      <p class="hero-tagline">Support Our Players — Earn Your Commission</p>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section class="products-section">
+    <div class="container">
+      <h2 class="section-title">Team Gear</h2>
+      <div class="products-grid">
+        <div class="product-card">
+          <div class="product-image">🏈</div>
+          <div class="product-info">
+            <div class="product-name">Game Jersey</div>
+            <div class="product-desc">Official Lake Pointe home jersey. Moisture-wicking fabric.</div>
+            <div class="product-footer">
+              <span class="product-price">$79.99</span>
+              <button class="buy-btn">Buy Now</button>
+            </div>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-image">👕</div>
+          <div class="product-info">
+            <div class="product-name">Practice Tee</div>
+            <div class="product-desc">Heavy-duty practice tee with reinforced shoulders.</div>
+            <div class="product-footer">
+              <span class="product-price">$44.99</span>
+              <button class="buy-btn">Buy Now</button>
+            </div>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-image">🧢</div>
+          <div class="product-info">
+            <div class="product-name">Snapback Cap</div>
+            <div class="product-desc">Embroidered logo, adjustable snapback closure.</div>
+            <div class="product-footer">
+              <span class="product-price">$29.99</span>
+              <button class="buy-btn">Buy Now</button>
+            </div>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-image">🧥</div>
+          <div class="product-info">
+            <div class="product-name">Hoodie</div>
+            <div class="product-desc">Fleece-lined pullover with embroidered crest.</div>
+            <div class="product-footer">
+              <span class="product-price">$64.99</span>
+              <button class="buy-btn">Buy Now</button>
+            </div>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-image">🎒</div>
+          <div class="product-info">
+            <div class="product-name">Duffel Bag</div>
+            <div class="product-desc">Team-colored gym bag with side pockets.</div>
+            <div class="product-footer">
+              <span class="product-price">$49.99</span>
+              <button class="buy-btn">Buy Now</button>
+            </div>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-image">🧤</div>
+          <div class="product-info">
+            <div class="product-name">Training Gear Set</div>
+            <div class="product-desc">Gloves, wristbands, and headband bundle.</div>
+            <div class="product-footer">
+              <span class="product-price">$34.99</span>
+              <button class="buy-btn">Buy Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEADERBOARD -->
+  <section class="leaderboard-section">
+    <div class="container">
+      <h2 class="section-title">Top Sellers</h2>
+      <div class="leaderboard-table">
+        <div class="leaderboard-header">
+          <span>#</span>
+          <span>Player</span>
+          <span>Amount</span>
+        </div>
+        <div class="leaderboard-row">
+          <span class="leaderboard-rank gold">1</span>
+          <span class="leaderboard-name">Marcus Thompson</span>
+          <span class="leaderboard-amount">$1,240</span>
+        </div>
+        <div class="leaderboard-row">
+          <span class="leaderboard-rank silver">2</span>
+          <span class="leaderboard-name">Jaylen Williams</span>
+          <span class="leaderboard-amount">$985</span>
+        </div>
+        <div class="leaderboard-row">
+          <span class="leaderboard-rank bronze">3</span>
+          <span class="leaderboard-name">DeShawn Carter</span>
+          <span class="leaderboard-amount">$872</span>
+        </div>
+        <div class="leaderboard-row">
+          <span class="leaderboard-rank">4</span>
+          <span class="leaderboard-name">Omari Jackson</span>
+          <span class="leaderboard-amount">$754</span>
+        </div>
+        <div class="leaderboard-row">
+          <span class="leaderboard-rank">5</span>
+          <span class="leaderboard-name">Terrell Brown</span>
+          <span class="leaderboard-amount">$698</span>
+        </div>
+        <div class="leaderboard-row">
+          <span class="leaderboard-rank">6</span>
+          <span class="leaderboard-name">Darius Miller</span>
+          <span class="leaderboard-amount">$621</span>
+        </div>
+        <div class="leaderboard-row">
+          <span class="leaderboard-rank">7</span>
+          <span class="leaderboard-name">Kendall Davis</span>
+          <span class="leaderboard-amount">$540</span>
+        </div>
+        <div class="leaderboard-row">
+          <span class="leaderboard-rank">8</span>
+          <span class="leaderboard-name">Malik Johnson</span>
+          <span class="leaderboard-amount">$487</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHARE / QR -->
+  <section class="share-section">
+    <div class="container">
+      <h2 class="section-title">Share &amp; Earn</h2>
+      <div class="share-card">
+        <div class="qr-placeholder">QR CODE<br>PLACEHOLDER</div>
+        <div class="share-title">Scan to Support Marcus Thompson</div>
+        <div class="share-url">rosterraise.com/lp/marcus-thompson</div>
+        <div class="share-buttons">
+          <button class="share-btn copy">Copy Link</button>
+          <button class="share-btn twitter">Twitter</button>
+          <button class="share-btn facebook">Facebook</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COACH LOGIN -->
+  <section class="coach-section">
+    <div class="container">
+      <h2 class="section-title">Coach Portal</h2>
+      <div class="coach-card">
+        <div class="coach-icon">🏆</div>
+        <div class="coach-title">Coach Login</div>
+        <div class="coach-desc">Access your team dashboard and player sales reports.</div>
+        <input type="text" class="coach-input" placeholder="Coach ID">
+        <input type="password" class="coach-input" placeholder="Password">
+        <button class="coach-login-btn">Sign In</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-logo">Lake Pointe <span>Football</span></div>
+      <div class="footer-links">
+        <a href="#">Shop</a>
+        <a href="#">Leaderboard</a>
+        <a href="#">Coach Login</a>
+        <a href="#">FAQ</a>
+        <a href="#">Contact</a>
+      </div>
+      <p class="footer-copy">&copy; 2026 Lake Pointe Football. Powered by RosterRaise.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
