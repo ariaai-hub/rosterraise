@@ -13,6 +13,8 @@
       --red: #E63946;
       --red-dark: #9B1C1C;
       --black: #0A0A0A;
+      --black-card: #141414;
+      --black-border: #1E1E1E;
       --white: #FFFFFF;
       --off-white: #F5F5F5;
       --gray-light: #E5E5E5;
@@ -22,7 +24,7 @@
     body {
       font-family: 'Inter', sans-serif;
       color: var(--black);
-      background: var(--off-white);
+      background: var(--black);
       -webkit-font-smoothing: antialiased;
       min-height: 100vh;
     }
@@ -101,7 +103,7 @@
 
     /* CALCULATOR SECTION */
     .calc-section {
-      background: var(--white);
+      background: #080808;
       padding: 80px 0;
     }
     .calc-section h2 {
@@ -117,9 +119,9 @@
       margin-bottom: 40px;
       line-height: 1.6;
     }
-    .calc-card {
-      background: var(--off-white);
-      border: 1px solid var(--gray-light);
+.calc-card {
+      background: var(--black-card);
+      border: 1px solid var(--black-border);
       border-radius: 16px;
       padding: 40px;
     }
@@ -128,6 +130,12 @@
       grid-template-columns: 1fr 1fr 1fr;
       gap: 20px;
       margin-bottom: 32px;
+    }
+    .form-card {
+      background: var(--black-card);
+      border: 1px solid var(--black-border);
+      border-radius: 16px;
+      padding: 44px;
     }
     .calc-field label {
       display: block;
@@ -140,14 +148,14 @@
     }
     .calc-field input[type="number"] {
       width: 100%;
-      background: #fff;
-      border: 1px solid var(--gray-light);
+      background: #1A1A1A;
+      border: 1px solid #2A2A2A;
       border-radius: 8px;
       padding: 14px 16px;
       font-size: 16px;
       font-family: 'Oswald', sans-serif;
       font-weight: 600;
-      color: var(--black);
+      color: var(--red);
       outline: none;
       transition: border-color 0.2s;
     }
@@ -239,15 +247,17 @@
 
     /* COMMISSION STRUCTURE */
     .structure {
-      background: var(--off-white);
+      background: #080808;
       padding: 80px 0;
+      border-top: 1px solid #1A1A1A;
+      border-bottom: 1px solid #1A1A1A;
     }
     .structure h2 {
       font-family: 'Oswald', sans-serif;
       font-size: 42px;
       text-transform: uppercase;
       margin-bottom: 40px;
-      color: var(--black);
+      color: var(--white);
     }
     .tier-grid {
       display: grid;
@@ -255,19 +265,19 @@
       gap: 24px;
     }
     .tier-card {
-      background: var(--white);
-      border: 2px solid var(--gray-light);
+      background: var(--black-card);
+      border: 2px solid var(--black-border);
       border-radius: 14px;
       padding: 32px 28px;
       text-align: center;
       transition: border-color 0.2s, transform 0.2s;
+      position: relative;
     }
     .tier-card.popular {
       border-color: var(--red);
-      position: relative;
     }
     .tier-card.popular::before {
-      content: 'Most Common';
+      content: 'MOST POPULAR';
       position: absolute;
       top: -13px;
       left: 50%;
@@ -283,13 +293,13 @@
     }
     .tier-range {
       font-family: 'Oswald', sans-serif;
-      font-size: 28px;
+      font-size: 22px;
       font-weight: 700;
-      color: var(--black);
+      color: var(--white);
       margin-bottom: 4px;
     }
     .tier-label {
-      font-size: 12px;
+      font-size: 11px;
       color: var(--gray-dark);
       text-transform: uppercase;
       letter-spacing: 1px;
@@ -303,6 +313,11 @@
       line-height: 1;
       margin-bottom: 4px;
     }
+    .tier-rate-sub {
+      font-size: 13px;
+      color: var(--gray-dark);
+      margin-bottom: 4px;
+    }
     .tier-rate-note {
       font-size: 12px;
       color: var(--gray-dark);
@@ -311,7 +326,7 @@
 
     /* FORM SECTION */
     .form-section {
-      background: var(--white);
+      background: var(--black);
       padding: 80px 0;
     }
     .form-section h2 {
@@ -319,7 +334,7 @@
       font-size: 42px;
       text-transform: uppercase;
       margin-bottom: 8px;
-      color: var(--black);
+      color: var(--white);
     }
     .form-section .form-sub {
       font-size: 15px;
@@ -439,18 +454,19 @@
 
     /* FAQ */
     .faq-section {
-      background: var(--off-white);
+      background: #080808;
       padding: 80px 0;
+      border-top: 1px solid #1A1A1A;
     }
     .faq-section h2 {
       font-family: 'Oswald', sans-serif;
       font-size: 42px;
       text-transform: uppercase;
       margin-bottom: 40px;
-      color: var(--black);
+      color: var(--white);
     }
     .faq-list { max-width: 680px; margin: 0 auto; }
-    .faq-item { border-bottom: 1px solid var(--gray-light); }
+    .faq-item { border-bottom: 1px solid #1E1E1E; }
     .faq-question {
       display: flex;
       justify-content: space-between;
@@ -461,7 +477,7 @@
       font-size: 18px;
       text-transform: uppercase;
       user-select: none;
-      color: var(--black);
+      color: var(--white);
     }
     .faq-answer {
       overflow: hidden;
@@ -570,22 +586,25 @@
     <h2>Your Commission Structure</h2>
     <div class="tier-grid">
       <div class="tier-card">
-        <div class="tier-range">0–2</div>
-        <div class="tier-label">Teams Referred</div>
+        <div class="tier-range">STARTER</div>
+        <div class="tier-label">0–4 Teams</div>
         <div class="tier-rate">20%</div>
-        <div class="tier-rate-note">first order<br>10% recurring</div>
+        <div class="tier-rate-sub">first order commission</div>
+        <div class="tier-rate-note">10% recurring — lifetime</div>
       </div>
       <div class="tier-card popular">
-        <div class="tier-range">3–5</div>
-        <div class="tier-label">Teams Referred</div>
+        <div class="tier-range">GROWTH</div>
+        <div class="tier-label">5–29 Teams</div>
         <div class="tier-rate">25%</div>
-        <div class="tier-rate-note">first order<br>12% recurring</div>
+        <div class="tier-rate-sub">first order commission</div>
+        <div class="tier-rate-note">12% recurring — lifetime</div>
       </div>
       <div class="tier-card">
-        <div class="tier-range">6+</div>
-        <div class="tier-label">Teams Referred</div>
+        <div class="tier-range">ELITE</div>
+        <div class="tier-label">30+ Teams</div>
         <div class="tier-rate">30%</div>
-        <div class="tier-rate-note">first order<br>15% recurring</div>
+        <div class="tier-rate-sub">first order commission</div>
+        <div class="tier-rate-note">15% recurring — lifetime</div>
       </div>
     </div>
     <p style="font-size:13px;color:#6B7280;margin-top:20px;line-height:1.6;">Commission is calculated on the full order amount before any fees. All commissions are paid automatically via PayPal or direct deposit on a monthly basis.</p>
@@ -718,19 +737,36 @@
 </footer>
 
 <script>
-  // Commission calculator
+  // Commission calculator — new tier structure
   const teamsSlider = document.getElementById('teamsSlider');
   const teamsVal = document.getElementById('teamsVal');
   const earningsVal = document.getElementById('earningsVal');
 
+  function getCommissionRate(teams) {
+    if (teams >= 30) return 0.15; // Elite: 15% recurring
+    if (teams >= 5) return 0.12;  // Growth: 12% recurring
+    return 0.10;                   // Starter: 10% recurring
+  }
+
+  function getFirstOrderRate(teams) {
+    if (teams >= 30) return 0.30; // Elite: 30% first order
+    if (teams >= 5) return 0.25;  // Growth: 25% first order
+    return 0.20;                  // Starter: 20% first order
+  }
+
   function updateSlider() {
     const val = parseInt(teamsSlider.value);
     teamsVal.textContent = val;
-    // 10% of $3,400 avg per team
-    const earnings = Math.round(val * 3400 * 0.10);
-    earningsVal.textContent = earnings.toLocaleString();
     const pct = ((val - 1) / (50 - 1)) * 100;
     teamsSlider.style.setProperty('--pct', pct + '%');
+
+    // Average first-order commission ($3,400 avg × rate) + 12-month recurring estimate
+    const firstRate = getFirstOrderRate(val);
+    const recRate = getCommissionRate(val);
+    const firstOrder = Math.round(3400 * firstRate * val);
+    const recurringAnnual = Math.round(3400 * recRate * val * 12 * 0.5); // 50% reorder probability
+    const total = firstOrder + recurringAnnual;
+    earningsVal.textContent = '$' + total.toLocaleString();
   }
 
   teamsSlider.addEventListener('input', updateSlider);
