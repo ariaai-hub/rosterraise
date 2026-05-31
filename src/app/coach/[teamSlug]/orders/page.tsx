@@ -60,7 +60,7 @@ export default function OrdersPage() {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const res = await fetch('/api/coach/orders');
+        const res = await fetch('/api/coach/orders', { credentials: 'include' });
         if (res.ok) {
           const data = await res.json();
           setOrders(data.orders || []);
