@@ -315,12 +315,12 @@ export default function HomePageVariationB() {
         <div className="container-narrow">
           <div className="section-label">Pricing</div>
           <div className="section-headline">Simple, Transparent Pricing</div>
-          <div className="pricing-card">
-            <div className="pricing-headline">0% Platform Fee. Seriously.</div>
+<div className="pricing-card">
+            <div className="pricing-headline">30% Commission. Bi-Weekly Payouts.</div>
             <p className="pricing-body">
-              We make money only when you make money. The only fee is standard payment processing (3%). What your community spends goes 97% directly to your team.
+              We make money only when you make money. Every sale your team makes earns you commission — deposited directly to your account every two weeks. Average first-season earnings: $3,400.
             </p>
-            <a href="/auth/register" className="pricing-cta">Start Earning Free Store</a>
+            <a href="/auth/register" className="pricing-cta">Start Your Free Store</a>
           </div>
         </div>
       </section>
