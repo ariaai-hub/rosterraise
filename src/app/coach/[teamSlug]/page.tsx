@@ -65,7 +65,7 @@ export default function CoachDashboardPage() {
       }
 
       // Verify coach's team matches this page's team
-      const teamRes = await fetch(`/api/teams/${teamSlug}`);
+      const teamRes = await fetch(`/api/teams/${teamSlug}`, { credentials: 'include' });
       if (!teamRes.ok) {
         setError('Team not found.');
         return;
