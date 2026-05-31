@@ -57,7 +57,7 @@ export default function SettingsPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const sessionRes = await fetch('/api/auth/session');
+        const sessionRes = await fetch('/api/auth/session', { credentials: 'include' });
         if (!sessionRes.ok) return;
         const sessionData = await sessionRes.json();
         const userData = sessionData.user;
