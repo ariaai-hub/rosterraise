@@ -1,0 +1,353 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  COACH
+  PARENT
+  SALES_REP
+  CS
+}
+
+enum TeamStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+model User {
+  id               String    @id @default(cuid())
+  email            String    @unique
+  passwordHash     String
+  firstName        String
+  lastName         String
+  role             UserRole  @default(PARENT)
+  teamId           String?
+  team             Team?     @relation(fields: [teamId], references: [id])
+  emailVerified    Boolean   @default(false)
+  emailVerifyToken String?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  orders           Order[]
+  commissionRate   Float?
+  isActive         Boolean   @default(true)
+  assignedLeads    Lead[]    @relation("AssignedLeads")
+
+  @@map("users")
+}
+
+model Team {
+  id           String     @id @default(cuid())
+  name         String
+  slug         String     @unique
+  sport        String
+  logoUrl      String?
+  primaryColor String     @default("#E63946")
+  status       TeamStatus @default(PENDING)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  users        User[]
+  players      Player[]
+  orders       Order[]
+
+  @@map("teams")
+}
+
+model Player {
+  id        String   @id @default(cuid())
+  teamId    String
+  team      Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  firstName String
+  lastName  String
+  number    Int?
+  position  String
+  gradeLevel String
+  slug      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  orderItems OrderItem[]
+
+  @@unique([teamId, slug])
+  @@map("players")
+}
+
+model Product {
+  id           String      @id @default(cuid())
+  name         String
+  description  String      @db.Text
+  category     String
+  basePriceCents Int
+  imageUrl     String?
+  sizes        String[]
+  colors       String[]
+  inStock      Boolean     @default(true)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  orderItems   OrderItem[]
+
+  @@map("products")
+}
+
+model Order {
+  id               String      @id @default(cuid())
+  orderNumber      String      @unique
+  teamId           String
+  team             Team        @relation(fields: [teamId], references: [id])
+  userId           String
+  user             User        @relation(fields: [userId], references: [id])
+  status           OrderStatus @default(PENDING)
+  subtotalCents    Int
+  taxCents         Int
+  shippingCents    Int
+  totalCents       Int
+  stripePaymentId  String?
+  shippingName     String?
+  shippingAddress  String?
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+  orderItems       OrderItem[]
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id           String   @id @default(cuid())
+  orderId      String
+  order        Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId    String
+  product      Product  @relation(fields: [productId], references: [id])
+  playerId     String?
+  player       Player?  @relation(fields: [playerId], references: [id])
+  quantity     Int
+  size         String
+  color        String
+  unitPriceCents Int
+  customization Json?
+  createdAt    DateTime @default(now())
+
+  @@map("order_items")
+}
+
+model Lead {
+  id               String    @id @default(cuid())
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  firstName        String?
+  lastName         String?
+  title            String?
+  schoolName       String
+  schoolUrl        String?
+  schoolCity       String?
+  schoolState      String?
+  schoolZip        String?
+  sport            String?
+
+  email            String?
+  phone            String?
+  facebookUrl      String?
+  instagramUrl     String?
+
+  sourceChannel    String?
+  sourceGroupId    String?
+  sourceGroupName  String?
+  leadNotes        String?
+
+  stage            Int       @default(1)
+  stageChangedAt   DateTime?
+  isHot            Boolean   @default(false)
+  lastContactedAt  DateTime?
+  nextActionAt     DateTime?
+
+  emailSent        Int       @default(0)
+  emailOpened      Int       @default(0)
+  emailClicked     Int       @default(0)
+  emailReplied     Int       @default(0)
+  fbCommentSent    Boolean   @default(false)
+  fbDmSent         Boolean   @default(false)
+  fbDmReplied      Boolean   @default(false)
+  fbCommentText    String?
+
+  aiScore          Int?
+  aiNotes          String?
+  lastAiAnalysisAt DateTime?
+
+  assignedTo       String?
+  team             String?
+
+  tags             String[]
+
+  estimatedStudents Int      @default(200)
+  aiEstimatedValue  Int?
+  contractValue     Int?
+  wonAt             DateTime?
+
+  engagementEvents EngagementEvent[]
+  assignedUser     User?     @relation("AssignedLeads", fields: [assignedTo], references: [id])
+  sequenceEnrollments EmailSequenceEnrollment[]
+  aiAnalysis       LeadAIAnalysis?
+
+  @@map("leads")
+}
+
+model EngagementEvent {
+  id              String    @id @default(cuid())
+  createdAt       DateTime  @default(now())
+
+  leadId          String
+  lead            Lead      @relation(fields: [leadId], references: [id], onDelete: Cascade)
+
+  channel         String
+  actionType      String
+  messageId       String?
+  contentPreview  String?
+  fullContent     String?
+  isAuto          Boolean   @default(true)
+  sentBy          String?
+  responseText    String?
+  isReviewed      Boolean   @default(false)
+  reviewedAt      DateTime?
+
+  emailMessageId  String?
+  openedAt        DateTime?
+  repliedAt       DateTime?
+
+  @@map("engagement_events")
+}
+
+model EmailSequence {
+  id        String   @id @default(cuid())
+  name      String
+  trigger   String   @default("AUTO_STAGE_CHANGE")
+  stages    Json     @default("[]")
+  steps     Json     @default("[]")
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  enrollments EmailSequenceEnrollment[]
+
+  @@map("email_sequences")
+}
+
+model EmailSequenceEnrollment {
+  id           String   @id @default(cuid())
+  leadId       String
+  sequenceId   String
+  enrolledAt   DateTime @default(now())
+  currentStep  Int      @default(0)
+  nextStepAt   DateTime?
+  completedAt  DateTime?
+  isActive     Boolean  @default(true)
+
+  sequence     EmailSequence @relation(fields: [sequenceId], references: [id], onDelete: Cascade)
+  lead         Lead          @relation(fields: [leadId], references: [id], onDelete: Cascade)
+
+  @@unique([leadId, sequenceId])
+  @@map("email_sequence_enrollments")
+}
+
+model EmailTemplate {
+  id        String   @id @default(cuid())
+  name      String
+  subject   String
+  body      String   @db.Text
+  category  String   @default("FOLLOW_UP")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  createdBy String?
+
+  @@map("email_templates")
+}
+
+model SmsTemplate {
+  id          String   @id @default(cuid())
+  name        String
+  content     String   @db.Text
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  createdBy   String?
+
+  @@map("sms_templates")
+}
+
+model FacebookSpiderRun {
+  id          String   @id @default(cuid())
+  groupName   String
+  url         String
+  leadsFound  Int      @default(0)
+  imported    Int      @default(0)
+  status      String   @default("RUNNING")
+  errors      String[] @default([])
+  createdAt   DateTime @default(now())
+  createdBy   String?
+  runDetails  String?  @db.Text
+
+  @@map("facebook_spider_runs")
+}
+
+model BotConfig {
+  id                  String   @id @default(cuid())
+  isActive            Boolean  @default(true)
+  autoRespondEnabled  Boolean  @default(true)
+  aiScoringEnabled    Boolean  @default(true)
+  responseDelayMinutes Int     @default(5)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  @@map("bot_config")
+}
+
+enum TriggerEvent {
+  LEAD_CREATED
+  STAGE_CHANGED
+  REPLY_RECEIVED
+  PROPOSAL_SENT
+}
+
+enum ChannelType {
+  EMAIL
+  SMS
+}
+
+model BotTemplate {
+  id           String      @id @default(cuid())
+  name         String
+  triggerEvent TriggerEvent
+  channel      ChannelType @default(EMAIL)
+  subject      String?
+  body         String      @db.Text
+  isActive     Boolean     @default(true)
+  priority     Int         @default(0)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  @@map("bot_templates")
+}
+
+model LeadAIAnalysis {
+  id         String   @id @default(cuid())
+  leadId     String   @unique
+  lead       Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  score      Int
+  signals    Json
+  summary    String?
+  analyzedAt DateTime @default(now())
+
+  @@map("lead_ai_analysis")
+}
