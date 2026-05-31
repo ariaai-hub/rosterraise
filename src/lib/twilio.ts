@@ -8,11 +8,16 @@ export function isTwilioConfigured(): boolean {
   return !!(accountSid && authToken && phoneNumber);
 }
 
+let _client: ReturnType<typeof Twilio> | null = null;
+
 function getClient() {
   if (!isTwilioConfigured()) {
-    throw new Error('Twilio is not configured. Please set TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, and TWILIO_PHONE_NUMBER environment variables.');
+    return null;
   }
-  return Twilio(accountSid, authToken);
+  if (!_client) {
+    _client = Twilio(accountSid!, authToken!);
+  }
+  return _client;
 }
 
 export interface SmsResult {
@@ -34,8 +39,16 @@ export async function sendSms(to: string, body: string): Promise<SmsResult> {
     };
   }
 
+  const client = getClient();
+  if (!client) {
+    return {
+      success: false,
+      error: 'Twilio client not initialized.',
+      timestamp,
+    };
+  }
+
   try {
-    const client = getClient();
     const message = await client.messages.create({
       body,
       from: phoneNumber,
