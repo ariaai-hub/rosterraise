@@ -301,10 +301,10 @@ export default function CRMDashboardPage() {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex items-center gap-3">
-              <h1 className="text-xl font-bold" style={{ color: '#E63946' }}>
-                RosterRaise
+              <h1 className="text-xl font-bold tracking-[0.15em]" style={{ color: '#E63946', fontFamily: 'Oswald, sans-serif' }}>
+                ROSTERRAISE
               </h1>
-              <span className="text-gray-500 text-sm">CRM</span>
+              <span className="text-gray-500 text-xs font-medium" style={{ fontFamily: 'Inter, sans-serif' }}>CRM</span>
             </div>
             
             {/* Nav Items */}
@@ -353,10 +353,12 @@ export default function CRMDashboardPage() {
       <main className="p-6">
         {/* Page Header */}
         <div className="mb-6">
-          <h1 className="text-2xl font-bold" style={{ color: '#FFFFFF' }}>
-            CRM Command Center
+          <h1 className="text-2xl font-bold" style={{ color: '#FFFFFF', fontFamily: 'Oswald, sans-serif', letterSpacing: '0.05em' }}>
+            CRM COMMAND CENTER
           </h1>
-          <p className="text-gray-500 mt-1">Real-time overview of your sales pipeline and bot activity</p>
+          <p className="text-sm mt-1" style={{ color: '#666666', fontFamily: 'Inter, sans-serif' }}>
+            Real-time overview of your sales pipeline and bot activity
+          </p>
         </div>
 
         {/* Top Row - 4 Stat Cards */}
@@ -373,16 +375,16 @@ export default function CRMDashboardPage() {
               {/* Total Leads */}
               <div
                 className="p-6 rounded-xl"
-                style={{ backgroundColor: '#111111', border: '1px solid #1A1A1A' }}
+                style={{ backgroundColor: '#111111', border: '1px solid #1A1A1A', boxShadow: '0 4px 6px rgba(0,0,0,0.3)' }}
               >
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-2xl">👥</span>
                   <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#E63946' }}></div>
                 </div>
-                <p className="text-3xl font-bold" style={{ color: '#E63946' }}>
+                <p className="text-3xl font-bold" style={{ color: '#E63946', fontFamily: 'Oswald, sans-serif' }}>
                   {stats.totalLeads.toLocaleString()}
                 </p>
-                <p className="text-sm mt-1" style={{ color: '#888888' }}>
+                <p className="text-sm mt-1" style={{ color: '#888888', fontFamily: 'Inter, sans-serif' }}>
                   Total Leads
                 </p>
               </div>
@@ -390,16 +392,16 @@ export default function CRMDashboardPage() {
               {/* Active Leads */}
               <div
                 className="p-6 rounded-xl"
-                style={{ backgroundColor: '#111111', border: '1px solid #1A1A1A' }}
+                style={{ backgroundColor: '#111111', border: '1px solid #1A1A1A', boxShadow: '0 4px 6px rgba(0,0,0,0.3)' }}
               >
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-2xl">🔥</span>
                   <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#F59E0B' }}></div>
                 </div>
-                <p className="text-3xl font-bold" style={{ color: '#FFFFFF' }}>
+                <p className="text-3xl font-bold" style={{ color: '#FFFFFF', fontFamily: 'Oswald, sans-serif' }}>
                   {stats.activeLeads.toLocaleString()}
                 </p>
-                <p className="text-sm mt-1" style={{ color: '#888888' }}>
+                <p className="text-sm mt-1" style={{ color: '#888888', fontFamily: 'Inter, sans-serif' }}>
                   Active Leads (Stage 1-9)
                 </p>
               </div>
@@ -407,36 +409,36 @@ export default function CRMDashboardPage() {
               {/* Won This Month */}
               <div
                 className="p-6 rounded-xl"
-                style={{ backgroundColor: '#111111', border: '1px solid #1A1A1A' }}
+                style={{ backgroundColor: '#111111', border: '1px solid #1A1A1A', boxShadow: '0 4px 6px rgba(0,0,0,0.3)' }}
               >
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-2xl">🏆</span>
                   <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#10B981' }}></div>
                 </div>
-                <p className="text-3xl font-bold" style={{ color: '#10B981' }}>
+                <p className="text-3xl font-bold" style={{ color: '#10B981', fontFamily: 'Oswald, sans-serif' }}>
                   {stats.wonThisMonth}
                 </p>
-                <p className="text-sm mt-1" style={{ color: '#888888' }}>
+                <p className="text-sm mt-1" style={{ color: '#888888', fontFamily: 'Inter, sans-serif' }}>
                   Won This Month
                 </p>
-                <p className="text-xs mt-1" style={{ color: '#10B981' }}>
+                <p className="text-xs mt-1" style={{ color: '#10B981', fontFamily: 'Inter, sans-serif' }}>
                   {formatCurrency(stats.wonRevenueThisMonth)}
-</p>
+                </p>
               </div>
 
               {/* Pipeline Value */}
               <div
                 className="p-6 rounded-xl"
-                style={{ backgroundColor: '#111111', border: '1px solid #1A1A1A' }}
+                style={{ backgroundColor: '#111111', border: '1px solid #1A1A1A', boxShadow: '0 4px 6px rgba(0,0,0,0.3)' }}
               >
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-2xl">💰</span>
                   <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#3B82F6' }}></div>
                 </div>
-                <p className="text-3xl font-bold" style={{ color: '#3B82F6' }}>
+                <p className="text-3xl font-bold" style={{ color: '#3B82F6', fontFamily: 'Oswald, sans-serif' }}>
                   {formatCurrency(stats.pipelineValue)}
                 </p>
-                <p className="text-sm mt-1" style={{ color: '#888888' }}>
+                <p className="text-sm mt-1" style={{ color: '#888888', fontFamily: 'Inter, sans-serif' }}>
                   Pipeline Value
                 </p>
               </div>
@@ -449,11 +451,11 @@ export default function CRMDashboardPage() {
           {/* Reply Intelligence Table */}
           <div
             className="rounded-xl overflow-hidden"
-            style={{ backgroundColor: '#111111', border: '1px solid #1A1A1A' }}
+            style={{ backgroundColor: '#111111', border: '1px solid #1A1A1A', boxShadow: '0 4px 6px rgba(0,0,0,0.3)' }}
           >
             <div className="p-4 border-b" style={{ borderColor: '#1A1A1A' }}>
-              <h2 className="text-lg font-semibold" style={{ color: '#FFFFFF' }}>
-                Reply Intelligence Center
+              <h2 className="text-lg font-semibold" style={{ color: '#FFFFFF', fontFamily: 'Oswald, sans-serif', letterSpacing: '0.03em' }}>
+                REPLY INTELLIGENCE CENTER
               </h2>
             </div>
             
@@ -530,10 +532,10 @@ export default function CRMDashboardPage() {
           {/* Reply Rate Trend Chart */}
           <div
             className="rounded-xl p-4"
-            style={{ backgroundColor: '#111111', border: '1px solid #1A1A1A' }}
+            style={{ backgroundColor: '#111111', border: '1px solid #1A1A1A', boxShadow: '0 4px 6px rgba(0,0,0,0.3)' }}
           >
-            <h2 className="text-lg font-semibold mb-4" style={{ color: '#FFFFFF' }}>
-              30-Day Reply Rate Trends
+            <h2 className="text-lg font-semibold mb-4" style={{ color: '#FFFFFF', fontFamily: 'Oswald, sans-serif', letterSpacing: '0.03em' }}>
+              30-DAY REPLY RATE TRENDS
             </h2>
             {loadingTrends ? (
               <div className="h-64 flex items-center justify-center">
@@ -601,8 +603,8 @@ export default function CRMDashboardPage() {
 
         {/* Auto-Scaling Signals */}
         <div className="mb-8">
-          <h2 className="text-lg font-semibold mb-4" style={{ color: '#FFFFFF' }}>
-            Auto-Scaling Signals
+          <h2 className="text-lg font-semibold mb-4" style={{ color: '#FFFFFF', fontFamily: 'Oswald, sans-serif', letterSpacing: '0.03em' }}>
+            AUTO-SCALING SIGNALS
           </h2>
           {loadingScaling ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -676,12 +678,12 @@ export default function CRMDashboardPage() {
           {/* Live Activity Feed */}
           <div
             className="lg:col-span-2 rounded-xl overflow-hidden"
-            style={{ backgroundColor: '#111111', border: '1px solid #1A1A1A' }}
+            style={{ backgroundColor: '#111111', border: '1px solid #1A1A1A', boxShadow: '0 4px 6px rgba(0,0,0,0.3)' }}
           >
             <div className="p-4 border-b flex items-center justify-between" style={{ borderColor: '#1A1A1A' }}>
               <div className="flex items-center gap-2">
-                <h2 className="text-lg font-semibold" style={{ color: '#FFFFFF' }}>
-                  Live Activity Feed
+                <h2 className="text-lg font-semibold" style={{ color: '#FFFFFF', fontFamily: 'Oswald, sans-serif', letterSpacing: '0.03em' }}>
+                  LIVE ACTIVITY FEED
                 </h2>
                 <span className="flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium" style={{ backgroundColor: '#E6394620', color: '#E63946' }}>
                   <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ backgroundColor: '#E63946' }}></span>
@@ -746,8 +748,8 @@ export default function CRMDashboardPage() {
 
           {/* 30-Day Trends */}
           <div className="lg:col-span-3 space-y-6">
-            <h2 className="text-lg font-semibold" style={{ color: '#FFFFFF' }}>
-              30-Day Trends
+            <h2 className="text-lg font-semibold" style={{ color: '#FFFFFF', fontFamily: 'Oswald, sans-serif', letterSpacing: '0.03em' }}>
+              30-DAY TRENDS
             </h2>
             
             {loadingTrends ? (

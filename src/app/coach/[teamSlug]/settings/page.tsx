@@ -10,6 +10,7 @@ interface Team {
   sport: string;
   logoUrl: string | null;
   primaryColor: string;
+  status: string;
 }
 
 interface User {
@@ -44,6 +45,7 @@ export default function SettingsPage() {
     firstName: '',
     lastName: '',
     email: '',
+    role: '',
   });
 
   const [passwordForm, setPasswordForm] = useState({
@@ -68,10 +70,14 @@ export default function SettingsPage() {
           firstName: userData.firstName || '',
           lastName: userData.lastName || '',
           email: userData.email || '',
+          role: userData.role || 'COACH',
         });
 
         const teamId = userData.teamId;
-        if (!teamId) return;
+        if (!teamId) {
+          setLoading(false);
+          return;
+        }
 
         const teamRes = await fetch(`/api/teams/${teamId}`);
         if (teamRes.ok) {
@@ -177,24 +183,37 @@ export default function SettingsPage() {
     }
   };
 
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'APPROVED': return '#10B981';
+      case 'PENDING': return '#F59E0B';
+      case 'REJECTED': return '#EF4444';
+      default: return '#888888';
+    }
+  };
+
   return (
-    <div className="p-8" style={{ backgroundColor: '#0A0A0A', minHeight: '100vh' }}>
+    <div className="p-8" style={{ backgroundColor: '#0A0A0A', minHeight: '100vh', fontFamily: 'Inter, sans-serif' }}>
       <div className="max-w-2xl mx-auto space-y-8">
         <div>
-          <h1 className="text-3xl font-bold text-white">Settings</h1>
+          <h1 className="text-3xl font-bold tracking-tight" style={{ color: '#FFFFFF', fontFamily: 'Oswald, sans-serif' }}>
+            Settings
+          </h1>
           <p className="text-gray-500 mt-1">Manage your team and profile</p>
         </div>
 
         {loading ? (
-          <div className="text-center py-12 text-gray-500">Loading...</div>
+          <div className="flex items-center justify-center h-64">
+            <div className="inline-block w-8 h-8 border-4 border-red-500 border-t-transparent rounded-full animate-spin"></div>
+          </div>
         ) : (
           <>
             {/* Store URL Section */}
             <div
               className="p-6 rounded-xl"
-              style={{ backgroundColor: '#141414', border: '1px solid #1E1E1E' }}
+              style={{ backgroundColor: '#111111', border: '1px solid #222222' }}
             >
-              <label className="block text-sm font-medium mb-3 uppercase" style={{ color: '#888888' }}>
+              <label className="block text-xs font-medium mb-3 uppercase tracking-wider" style={{ color: '#888888' }}>
                 Your Store URL
               </label>
               <div className="flex items-center gap-3">
@@ -202,20 +221,30 @@ export default function SettingsPage() {
                   readOnly
                   value={storeUrl}
                   className="flex-1 px-4 py-3 rounded-lg outline-none"
-                  style={{ backgroundColor: '#1A1A1A', color: '#E63946', border: '1px solid #2A2A2A' }}
+                  style={{ 
+                    backgroundColor: '#0A0A0A', 
+                    color: '#E63946', 
+                    border: '1px solid #333333',
+                    fontFamily: 'Inter, sans-serif'
+                  }}
                 />
                 <button
                   type="button"
                   onClick={copyStoreUrl}
                   className="px-4 py-3 rounded-lg text-sm font-medium transition-colors"
-                  style={{ backgroundColor: '#1A1A1A', color: '#FFFFFF', border: '1px solid #2A2A2A' }}
+                  style={{ 
+                    backgroundColor: '#1a1a1a', 
+                    color: '#FFFFFF', 
+                    border: '1px solid #333333',
+                    fontFamily: 'Inter, sans-serif'
+                  }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.backgroundColor = '#E63946';
                     e.currentTarget.style.borderColor = '#E63946';
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = '#1A1A1A';
-                    e.currentTarget.style.borderColor = '#2A2A2A';
+                    e.currentTarget.style.backgroundColor = '#1a1a1a';
+                    e.currentTarget.style.borderColor = '#333333';
                   }}
                 >
                   Copy
@@ -225,7 +254,13 @@ export default function SettingsPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-4 py-3 rounded-lg text-sm font-medium transition-colors"
-                  style={{ backgroundColor: '#E63946', color: '#FFFFFF' }}
+                  style={{ 
+                    backgroundColor: '#E63946', 
+                    color: '#FFFFFF',
+                    fontFamily: 'Inter, sans-serif'
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#c92d3a'}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#E63946'}
                 >
                   Preview →
                 </a>
@@ -236,13 +271,15 @@ export default function SettingsPage() {
             <form onSubmit={handleTeamSave} className="space-y-6">
               <div
                 className="p-6 rounded-xl"
-                style={{ backgroundColor: '#111111', border: '1px solid #1A1A1A' }}
+                style={{ backgroundColor: '#111111', border: '1px solid #222222' }}
               >
-                <h2 className="text-lg font-semibold text-white mb-6">Team Information</h2>
+                <h2 className="text-lg font-semibold mb-6" style={{ color: '#FFFFFF', fontFamily: 'Oswald, sans-serif' }}>
+                  Team Information
+                </h2>
 
                 {/* Team Name */}
                 <div className="mb-6">
-                  <label className="block text-xs font-medium mb-2 uppercase" style={{ color: '#888888' }}>
+                  <label className="block text-xs font-medium mb-2 uppercase tracking-wider" style={{ color: '#888888' }}>
                     Team Name
                   </label>
                   <input
@@ -250,7 +287,12 @@ export default function SettingsPage() {
                     onChange={e => setTeamForm(f => ({ ...f, name: e.target.value }))}
                     required
                     className="w-full px-4 py-3 rounded-lg outline-none transition-colors"
-                    style={{ backgroundColor: '#1A1A1A', color: '#FFFFFF', border: '1px solid #2A2A2A' }}
+                    style={{ 
+                      backgroundColor: '#1A1A1A', 
+                      color: '#FFFFFF', 
+                      border: '1px solid #2A2A2A',
+                      fontFamily: 'Inter, sans-serif'
+                    }}
                     onFocus={(e) => (e.currentTarget.style.borderColor = '#E63946')}
                     onBlur={(e) => (e.currentTarget.style.borderColor = '#2A2A2A')}
                     placeholder="e.g. Warriors Basketball"
@@ -259,7 +301,7 @@ export default function SettingsPage() {
 
                 {/* Sport */}
                 <div className="mb-6">
-                  <label className="block text-xs font-medium mb-2 uppercase" style={{ color: '#888888' }}>
+                  <label className="block text-xs font-medium mb-2 uppercase tracking-wider" style={{ color: '#888888' }}>
                     Sport
                   </label>
                   <select
@@ -267,7 +309,12 @@ export default function SettingsPage() {
                     onChange={e => setTeamForm(f => ({ ...f, sport: e.target.value }))}
                     required
                     className="w-full px-4 py-3 rounded-lg outline-none transition-colors"
-                    style={{ backgroundColor: '#1A1A1A', color: '#FFFFFF', border: '1px solid #2A2A2A' }}
+                    style={{ 
+                      backgroundColor: '#1A1A1A', 
+                      color: '#FFFFFF', 
+                      border: '1px solid #2A2A2A',
+                      fontFamily: 'Inter, sans-serif'
+                    }}
                     onFocus={(e) => (e.currentTarget.style.borderColor = '#E63946')}
                     onBlur={(e) => (e.currentTarget.style.borderColor = '#2A2A2A')}
                   >
@@ -276,9 +323,31 @@ export default function SettingsPage() {
                   </select>
                 </div>
 
+                {/* Team Status */}
+                <div className="mb-6">
+                  <label className="block text-xs font-medium mb-2 uppercase tracking-wider" style={{ color: '#888888' }}>
+                    Status
+                  </label>
+                  <div className="flex items-center gap-3">
+                    <span
+                      className="px-3 py-2 text-sm font-semibold rounded-lg"
+                      style={{ 
+                        backgroundColor: getStatusColor(team?.status || '') + '20',
+                        color: getStatusColor(team?.status || ''),
+                        fontFamily: 'Inter, sans-serif'
+                      }}
+                    >
+                      {team?.status || 'PENDING'}
+                    </span>
+                    <span className="text-sm" style={{ color: '#666666' }}>
+                      {team?.status === 'APPROVED' ? 'Your team is live and accepting orders' : 'Your team is pending approval'}
+                    </span>
+                  </div>
+                </div>
+
                 {/* Logo URL */}
                 <div className="mb-6">
-                  <label className="block text-xs font-medium mb-2 uppercase" style={{ color: '#888888' }}>
+                  <label className="block text-xs font-medium mb-2 uppercase tracking-wider" style={{ color: '#888888' }}>
                     Logo URL
                   </label>
                   <input
@@ -286,7 +355,12 @@ export default function SettingsPage() {
                     value={teamForm.logoUrl}
                     onChange={e => setTeamForm(f => ({ ...f, logoUrl: e.target.value }))}
                     className="w-full px-4 py-3 rounded-lg outline-none transition-colors"
-                    style={{ backgroundColor: '#1A1A1A', color: '#FFFFFF', border: '1px solid #2A2A2A' }}
+                    style={{ 
+                      backgroundColor: '#1A1A1A', 
+                      color: '#FFFFFF', 
+                      border: '1px solid #2A2A2A',
+                      fontFamily: 'Inter, sans-serif'
+                    }}
                     onFocus={(e) => (e.currentTarget.style.borderColor = '#E63946')}
                     onBlur={(e) => (e.currentTarget.style.borderColor = '#2A2A2A')}
                     placeholder="https://example.com/logo.png"
@@ -305,8 +379,8 @@ export default function SettingsPage() {
                 </div>
 
                 {/* Primary Color */}
-                <div className="mb-6">
-                  <label className="block text-xs font-medium mb-2 uppercase" style={{ color: '#888888' }}>
+                <div className="mb-4">
+                  <label className="block text-xs font-medium mb-2 uppercase tracking-wider" style={{ color: '#888888' }}>
                     Primary Color
                   </label>
                   <div className="flex items-center gap-4">
@@ -321,7 +395,12 @@ export default function SettingsPage() {
                       value={teamForm.primaryColor}
                       onChange={e => setTeamForm(f => ({ ...f, primaryColor: e.target.value }))}
                       className="flex-1 px-4 py-2 rounded-lg outline-none transition-colors"
-                      style={{ backgroundColor: '#1A1A1A', color: '#FFFFFF', border: '1px solid #2A2A2A' }}
+                      style={{ 
+                        backgroundColor: '#1A1A1A', 
+                        color: '#FFFFFF', 
+                        border: '1px solid #2A2A2A',
+                        fontFamily: 'Inter, sans-serif'
+                      }}
                       onFocus={(e) => (e.currentTarget.style.borderColor = '#E63946')}
                       onBlur={(e) => (e.currentTarget.style.borderColor = '#2A2A2A')}
                       placeholder="#E63946"
@@ -331,13 +410,23 @@ export default function SettingsPage() {
               </div>
 
               {error && (
-                <div className="p-4 rounded-lg text-sm" style={{ backgroundColor: '#1a0000', color: '#E63946', border: '1px solid #E63946' }}>
+                <div className="p-4 rounded-lg text-sm" style={{ 
+                  backgroundColor: '#1a0000', 
+                  color: '#E63946', 
+                  border: '1px solid #E63946',
+                  fontFamily: 'Inter, sans-serif'
+                }}>
                   {error}
                 </div>
               )}
 
               {saved && (
-                <div className="p-4 rounded-lg text-sm" style={{ backgroundColor: '#002200', color: '#22c55e', border: '1px solid #22c55e' }}>
+                <div className="p-4 rounded-lg text-sm" style={{ 
+                  backgroundColor: '#002200', 
+                  color: '#22c55e', 
+                  border: '1px solid #22c55e',
+                  fontFamily: 'Inter, sans-serif'
+                }}>
                   Settings saved successfully!
                 </div>
               )}
@@ -346,44 +435,93 @@ export default function SettingsPage() {
                 type="submit"
                 disabled={saving}
                 className="w-full py-3 rounded-lg font-semibold transition-all"
-                style={{ backgroundColor: saving ? '#661a1f' : '#E63946', color: '#FFFFFF', cursor: saving ? 'not-allowed' : 'pointer' }}
+                style={{ 
+                  backgroundColor: saving ? '#661a1f' : '#E63946', 
+                  color: '#FFFFFF', 
+                  cursor: saving ? 'not-allowed' : 'pointer',
+                  fontFamily: 'Inter, sans-serif'
+                }}
+                onMouseEnter={(e) => {
+                  if (!saving) e.currentTarget.style.backgroundColor = '#c92d3a';
+                }}
+                onMouseLeave={(e) => {
+                  if (!saving) e.currentTarget.style.backgroundColor = '#E63946';
+                }}
               >
                 {saving ? 'Saving...' : 'Save Settings'}
               </button>
             </form>
 
+            {/* Commission Section */}
+            <div
+              className="p-6 rounded-xl"
+              style={{ backgroundColor: '#111111', border: '1px solid #222222' }}
+            >
+              <h2 className="text-lg font-semibold mb-4" style={{ color: '#FFFFFF', fontFamily: 'Oswald, sans-serif' }}>
+                Commission
+              </h2>
+              <div className="flex items-center gap-4 p-4 rounded-lg" style={{ backgroundColor: '#0A0A0A' }}>
+                <div
+                  className="w-12 h-12 rounded-lg flex items-center justify-center font-bold text-lg"
+                  style={{ backgroundColor: '#10B98120', color: '#10B981', fontFamily: 'Oswald, sans-serif' }}
+                >
+                  %
+                </div>
+                <div>
+                  <p className="font-semibold text-lg" style={{ color: '#FFFFFF', fontFamily: 'Inter, sans-serif' }}>
+                    You earn 30% commission
+                  </p>
+                  <p className="text-sm" style={{ color: '#888888', fontFamily: 'Inter, sans-serif' }}>
+                    Paid bi-weekly via direct deposit
+                  </p>
+                </div>
+              </div>
+            </div>
+
             {/* Coach Profile Section */}
             <div
               className="p-6 rounded-xl"
-              style={{ backgroundColor: '#111111', border: '1px solid #1A1A1A' }}
+              style={{ backgroundColor: '#111111', border: '1px solid #222222' }}
             >
-              <h2 className="text-lg font-semibold text-white mb-6">Coach Profile</h2>
+              <h2 className="text-lg font-semibold mb-6" style={{ color: '#FFFFFF', fontFamily: 'Oswald, sans-serif' }}>
+                Coach Profile
+              </h2>
 
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-medium mb-2 uppercase" style={{ color: '#888888' }}>
+                    <label className="block text-xs font-medium mb-2 uppercase tracking-wider" style={{ color: '#888888' }}>
                       First Name
                     </label>
                     <input
                       value={coachForm.firstName}
                       onChange={e => setCoachForm(f => ({ ...f, firstName: e.target.value }))}
                       className="w-full px-4 py-3 rounded-lg outline-none transition-colors"
-                      style={{ backgroundColor: '#1A1A1A', color: '#FFFFFF', border: '1px solid #2A2A2A' }}
+                      style={{ 
+                        backgroundColor: '#1A1A1A', 
+                        color: '#FFFFFF', 
+                        border: '1px solid #2A2A2A',
+                        fontFamily: 'Inter, sans-serif'
+                      }}
                       onFocus={(e) => (e.currentTarget.style.borderColor = '#E63946')}
                       onBlur={(e) => (e.currentTarget.style.borderColor = '#2A2A2A')}
                       placeholder="First name"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-medium mb-2 uppercase" style={{ color: '#888888' }}>
+                    <label className="block text-xs font-medium mb-2 uppercase tracking-wider" style={{ color: '#888888' }}>
                       Last Name
                     </label>
                     <input
                       value={coachForm.lastName}
                       onChange={e => setCoachForm(f => ({ ...f, lastName: e.target.value }))}
                       className="w-full px-4 py-3 rounded-lg outline-none transition-colors"
-                      style={{ backgroundColor: '#1A1A1A', color: '#FFFFFF', border: '1px solid #2A2A2A' }}
+                      style={{ 
+                        backgroundColor: '#1A1A1A', 
+                        color: '#FFFFFF', 
+                        border: '1px solid #2A2A2A',
+                        fontFamily: 'Inter, sans-serif'
+                      }}
                       onFocus={(e) => (e.currentTarget.style.borderColor = '#E63946')}
                       onBlur={(e) => (e.currentTarget.style.borderColor = '#2A2A2A')}
                       placeholder="Last name"
@@ -392,7 +530,7 @@ export default function SettingsPage() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium mb-2 uppercase" style={{ color: '#888888' }}>
+                  <label className="block text-xs font-medium mb-2 uppercase tracking-wider" style={{ color: '#888888' }}>
                     Email
                   </label>
                   <input
@@ -400,26 +538,50 @@ export default function SettingsPage() {
                     value={coachForm.email}
                     readOnly
                     className="w-full px-4 py-3 rounded-lg outline-none cursor-not-allowed"
-                    style={{ backgroundColor: '#0A0A0A', color: '#555555', border: '1px solid #2A2A2A' }}
+                    style={{ 
+                      backgroundColor: '#0A0A0A', 
+                      color: '#555555', 
+                      border: '1px solid #2A2A2A',
+                      fontFamily: 'Inter, sans-serif'
+                    }}
                     placeholder="coach@team.com"
                   />
                   <p className="text-xs mt-2" style={{ color: '#555555' }}>
                     Email cannot be changed. Contact support if you need to update your email.
                   </p>
                 </div>
+
+                <div>
+                  <label className="block text-xs font-medium mb-2 uppercase tracking-wider" style={{ color: '#888888' }}>
+                    Role
+                  </label>
+                  <div
+                    className="px-4 py-3 rounded-lg"
+                    style={{ 
+                      backgroundColor: '#0A0A0A', 
+                      color: '#FFFFFF', 
+                      border: '1px solid #2A2A2A',
+                      fontFamily: 'Inter, sans-serif'
+                    }}
+                  >
+                    {coachForm.role || 'COACH'}
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* Change Password Section */}
+            {/* Account Security Section */}
             <div
               className="p-6 rounded-xl"
-              style={{ backgroundColor: '#111111', border: '1px solid #1A1A1A' }}
+              style={{ backgroundColor: '#111111', border: '1px solid #222222' }}
             >
-              <h2 className="text-lg font-semibold text-white mb-6">Change Password</h2>
+              <h2 className="text-lg font-semibold mb-6" style={{ color: '#FFFFFF', fontFamily: 'Oswald, sans-serif' }}>
+                Account Security
+              </h2>
 
               <form onSubmit={handlePasswordChange} className="space-y-4">
                 <div>
-                  <label className="block text-xs font-medium mb-2 uppercase" style={{ color: '#888888' }}>
+                  <label className="block text-xs font-medium mb-2 uppercase tracking-wider" style={{ color: '#888888' }}>
                     Current Password
                   </label>
                   <input
@@ -428,7 +590,12 @@ export default function SettingsPage() {
                     onChange={e => setPasswordForm(f => ({ ...f, currentPassword: e.target.value }))}
                     required
                     className="w-full px-4 py-3 rounded-lg outline-none transition-colors"
-                    style={{ backgroundColor: '#1A1A1A', color: '#FFFFFF', border: '1px solid #2A2A2A' }}
+                    style={{ 
+                      backgroundColor: '#1A1A1A', 
+                      color: '#FFFFFF', 
+                      border: '1px solid #2A2A2A',
+                      fontFamily: 'Inter, sans-serif'
+                    }}
                     onFocus={(e) => (e.currentTarget.style.borderColor = '#E63946')}
                     onBlur={(e) => (e.currentTarget.style.borderColor = '#2A2A2A')}
                     placeholder="Enter current password"
@@ -436,7 +603,7 @@ export default function SettingsPage() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium mb-2 uppercase" style={{ color: '#888888' }}>
+                  <label className="block text-xs font-medium mb-2 uppercase tracking-wider" style={{ color: '#888888' }}>
                     New Password
                   </label>
                   <input
@@ -446,7 +613,12 @@ export default function SettingsPage() {
                     required
                     minLength={8}
                     className="w-full px-4 py-3 rounded-lg outline-none transition-colors"
-                    style={{ backgroundColor: '#1A1A1A', color: '#FFFFFF', border: '1px solid #2A2A2A' }}
+                    style={{ 
+                      backgroundColor: '#1A1A1A', 
+                      color: '#FFFFFF', 
+                      border: '1px solid #2A2A2A',
+                      fontFamily: 'Inter, sans-serif'
+                    }}
                     onFocus={(e) => (e.currentTarget.style.borderColor = '#E63946')}
                     onBlur={(e) => (e.currentTarget.style.borderColor = '#2A2A2A')}
                     placeholder="Enter new password (min 8 characters)"
@@ -454,7 +626,7 @@ export default function SettingsPage() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium mb-2 uppercase" style={{ color: '#888888' }}>
+                  <label className="block text-xs font-medium mb-2 uppercase tracking-wider" style={{ color: '#888888' }}>
                     Confirm New Password
                   </label>
                   <input
@@ -464,7 +636,12 @@ export default function SettingsPage() {
                     required
                     minLength={8}
                     className="w-full px-4 py-3 rounded-lg outline-none transition-colors"
-                    style={{ backgroundColor: '#1A1A1A', color: '#FFFFFF', border: '1px solid #2A2A2A' }}
+                    style={{ 
+                      backgroundColor: '#1A1A1A', 
+                      color: '#FFFFFF', 
+                      border: '1px solid #2A2A2A',
+                      fontFamily: 'Inter, sans-serif'
+                    }}
                     onFocus={(e) => (e.currentTarget.style.borderColor = '#E63946')}
                     onBlur={(e) => (e.currentTarget.style.borderColor = '#2A2A2A')}
                     placeholder="Confirm new password"
@@ -472,13 +649,23 @@ export default function SettingsPage() {
                 </div>
 
                 {passwordError && (
-                  <div className="p-4 rounded-lg text-sm" style={{ backgroundColor: '#1a0000', color: '#E63946', border: '1px solid #E63946' }}>
+                  <div className="p-4 rounded-lg text-sm" style={{ 
+                    backgroundColor: '#1a0000', 
+                    color: '#E63946', 
+                    border: '1px solid #E63946',
+                    fontFamily: 'Inter, sans-serif'
+                  }}>
                     {passwordError}
                   </div>
                 )}
 
                 {passwordSuccess && (
-                  <div className="p-4 rounded-lg text-sm" style={{ backgroundColor: '#002200', color: '#22c55e', border: '1px solid #22c55e' }}>
+                  <div className="p-4 rounded-lg text-sm" style={{ 
+                    backgroundColor: '#002200', 
+                    color: '#22c55e', 
+                    border: '1px solid #22c55e',
+                    fontFamily: 'Inter, sans-serif'
+                  }}>
                     {passwordSuccess}
                   </div>
                 )}
@@ -486,7 +673,12 @@ export default function SettingsPage() {
                 <button
                   type="submit"
                   className="w-full py-3 rounded-lg font-semibold transition-all"
-                  style={{ backgroundColor: '#1A1A1A', color: '#FFFFFF', border: '1px solid #2A2A2A' }}
+                  style={{ 
+                    backgroundColor: '#1A1A1A', 
+                    color: '#FFFFFF', 
+                    border: '1px solid #2A2A2A',
+                    fontFamily: 'Inter, sans-serif'
+                  }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.backgroundColor = '#E63946';
                     e.currentTarget.style.borderColor = '#E63946';

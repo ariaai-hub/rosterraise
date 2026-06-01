@@ -10,7 +10,8 @@ const registerSchema = z.object({
   firstName: z.string().min(1),
   lastName: z.string().min(1),
   role: z.enum(['COACH', 'PARENT']).optional().default('PARENT'),
-  teamId: z.string().optional(),
+  teamName: z.string().optional(),
+  sport: z.string().optional(),
 });
 
 export async function POST(request: NextRequest) {
@@ -30,34 +31,69 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Hash password and generate verify token
+    // Hash password
     const passwordHash = await hashPassword(validated.password);
     const emailVerifyToken = generateEmailVerifyToken();
 
-    // Create user
+    // If COACH, create team first then user
+    if (validated.role === 'COACH' && validated.teamName) {
+      const slugBase = validated.teamName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+      const slug = `${slugBase}-${Date.now().toString(36).slice(-6)}`;
+
+      const team = await prisma.team.create({
+        data: {
+          name: validated.teamName,
+          slug,
+          sport: validated.sport || 'Other',
+          status: 'PENDING',
+        },
+      });
+
+      const user = await prisma.user.create({
+        data: {
+          email: validated.email,
+          passwordHash,
+          firstName: validated.firstName,
+          lastName: validated.lastName,
+          role: 'COACH',
+          emailVerified: true,
+          teamId: team.id,
+        },
+        select: {
+          id: true, email: true, firstName: true, lastName: true, role: true, teamId: true,
+        },
+      });
+
+      const teamSlug = team.slug;
+
+      // Create tokens and set cookies
+      const accessToken = await createAccessToken({ userId: user.id, email: user.email, role: user.role });
+      const refreshToken = await createRefreshToken({ userId: user.id, email: user.email, role: user.role });
+      setAuthCookies(accessToken, refreshToken);
+
+      return NextResponse.json({
+        message: 'Registration successful. Your team is under review.',
+        user: { ...user, teamSlug },
+      }, { status: 201 });
+    }
+
+    // Standard (non-coach) registration
     const user = await prisma.user.create({
       data: {
         email: validated.email,
         passwordHash,
         firstName: validated.firstName,
         lastName: validated.lastName,
-        role: validated.role,
-        teamId: validated.teamId,
-        emailVerified: true, // AUTO-VERIFY for MVP — remove email verification flow once domain is confirmed
+        role: validated.role || 'PARENT',
+        emailVerified: false,
       },
       select: {
-        id: true,
-        email: true,
-        firstName: true,
-        lastName: true,
-        role: true,
+        id: true, email: true, firstName: true, lastName: true, role: true, teamId: true,
       },
     });
 
-    // Send verification email
     await sendVerificationEmail(user.email, emailVerifyToken);
 
-    // Create tokens and set cookies
     const accessToken = await createAccessToken({ userId: user.id, email: user.email, role: user.role });
     const refreshToken = await createRefreshToken({ userId: user.id, email: user.email, role: user.role });
     setAuthCookies(accessToken, refreshToken);

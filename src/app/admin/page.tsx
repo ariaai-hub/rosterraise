@@ -18,7 +18,7 @@ export default function AdminLoginPage() {
         if (res.ok) {
           const data = await res.json();
           if (data.user?.role === 'ADMIN') {
-            router.push('/admin/crm');
+            router.push('/admin/overview');
           }
         }
       } catch {
@@ -52,7 +52,7 @@ export default function AdminLoginPage() {
         return;
       }
 
-      router.push('/admin/crm');
+      router.push('/admin/overview');
     } catch {
       setError('An error occurred. Please try again.');
     } finally {

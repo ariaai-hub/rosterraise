@@ -2,9 +2,15 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import Stripe from 'stripe';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
-  apiVersion: '2026-05-27.dahlia',
-});
+function getStripe(): Stripe {
+  const key = process.env.STRIPE_SECRET_KEY;
+  if (!key) {
+    throw new Error('STRIPE_SECRET_KEY is not configured');
+  }
+  return new Stripe(key, {
+    apiVersion: '2026-05-27.dahlia',
+  });
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -15,6 +21,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Missing stripe signature' }, { status: 400 });
     }
 
+    const stripe = getStripe();
     let event: Stripe.Event;
 
     try {

@@ -15,7 +15,7 @@ function getClient() {
     return null;
   }
   if (!_client) {
-    _client = Twilio(accountSid!, authToken!);
+    _client = Twilio(accountSid as string, authToken as string);
   }
   return _client;
 }
