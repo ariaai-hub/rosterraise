@@ -1,6 +1,6 @@
 import { Resend } from 'resend';
 
-const FROM_EMAIL = 'RosterRaise <noreply@rosterraise.com>';
+const FROM_EMAIL = 'admin@rosterraise.com';
 
 // Domain verification status cache
 let domainStatusCache: { status: string; checkedAt: number } | null = null;
