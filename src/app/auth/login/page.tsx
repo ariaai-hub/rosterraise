@@ -100,23 +100,14 @@ export default function LoginPage() {
             {/* Logo */}
             <div style={{ marginBottom: '32px' }}>
               <a href="/" style={{ textDecoration: 'none' }}>
-                <img
-                  src="/logo_cropped.png"
-                  alt="RosterRaise"
-                  style={{ height: '80px', width: 'auto' }}
-                  onError={(e) => {
-                    e.currentTarget.style.display = 'none';
-                    const fallback = e.currentTarget.nextElementSibling as HTMLElement | null;
-                    if (fallback) fallback.style.display = 'block';
-                  }}
-                />
                 <div style={{
-                  display: 'none',
                   fontFamily: '"Oswald", sans-serif',
-                  fontSize: '28px',
+                  fontSize: '32px',
                   fontWeight: 700,
                   letterSpacing: '0.15em',
                   color: '#E63946',
+                  textAlign: 'center',
+                  lineHeight: 1,
                 }}>
                   ROSTERRAISE
                 </div>
