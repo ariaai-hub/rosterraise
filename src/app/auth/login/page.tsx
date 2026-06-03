@@ -106,7 +106,8 @@ export default function LoginPage() {
                   style={{ height: '80px', width: 'auto' }}
                   onError={(e) => {
                     e.currentTarget.style.display = 'none';
-                    e.currentTarget.nextElementSibling.style.display = 'block';
+                    const fallback = e.currentTarget.nextElementSibling as HTMLElement | null;
+                    if (fallback) fallback.style.display = 'block';
                   }}
                 />
                 <div style={{
