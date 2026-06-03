@@ -102,7 +102,7 @@ export default function LoginPage() {
           {/* Form card */}
           <div style={{ textAlign: 'center' }}>
             {/* Logo */}
-            <div style={{ marginBottom: '32px' }}>
+            <div style={{ marginBottom: '24px' }}>
               <a href="/" style={{ textDecoration: 'none' }}>
                 <div style={{
                   fontFamily: '"Oswald", sans-serif',
@@ -205,16 +205,16 @@ export default function LoginPage() {
                     textAlign: 'left',
                   }}
                 >
-                  Email
+                  Username
                 </label>
                 <input
                   id="email"
-                  type="email"
+                  type="text"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  placeholder="Enter email"
-                  autoComplete="email"
+                  placeholder="Enter username"
+                  autoComplete="username"
                   style={{
                     width: '100%',
                     height: '36px',
