@@ -64,7 +64,7 @@ export default function LoginPage() {
       if (role === 'ADMIN' || role === 'SALES_REP') {
         router.push('/admin/crm');
       } else if (role === 'COACH' && teamSlug) {
-        router.push(`/team/${teamSlug}`);
+        router.push(`/coach/${teamSlug}`);
       } else {
         router.push('/');
       }
