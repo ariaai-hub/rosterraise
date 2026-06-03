@@ -5,23 +5,17 @@ export default function AuthLayout({
 }) {
   return (
     <div
-      className="min-h-screen flex flex-col items-center justify-center"
-      style={{ backgroundColor: '#F8F9FA' }}
+      style={{
+        minHeight: '100vh',
+        backgroundColor: '#FFFFFF',
+        padding: '60px 15px 40px',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
     >
-      {/* Logo */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold" style={{ color: '#E63946' }}>
-          RosterRaise
-        </h1>
-      </div>
-
-      {/* Card wrapper */}
-      <div
-        className="w-full max-w-md p-8 rounded-xl shadow-sm"
-        style={{ backgroundColor: '#FFFFFF', border: '1px solid #E5E5E5' }}
-      >
-        {children}
-      </div>
+      {children}
     </div>
   );
 }
