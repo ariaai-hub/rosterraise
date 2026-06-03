@@ -79,7 +79,7 @@ export default function LoginPage() {
   return (
     <div style={{
       minHeight: '100vh',
-      backgroundColor: '#FFFFFF',
+      backgroundColor: '#0A0A0A',
       display: 'flex',
       flexDirection: 'column',
       padding: '60px 0px 40px',
@@ -221,7 +221,7 @@ export default function LoginPage() {
                     fontFamily: '"Inter", sans-serif',
                     fontSize: '16px',
                     color: '#495057',
-                    backgroundColor: '#FFFFFF',
+                    backgroundColor: '#1A1A1A',
                     border: 'none',
                     borderBottom: '2px solid #E63946',
                     outline: 'none',
