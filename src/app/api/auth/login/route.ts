@@ -34,13 +34,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check email verification (bypass for demo)
-    if (!user.emailVerified && !user.email.endsWith('@test.com') && !user.email.includes('demo')) {
-      return NextResponse.json(
-        { error: 'Please verify your email before logging in' },
-        { status: 403 }
-      );
-    }
+    // Check email verification (DISABLED FOR DEMO)
+    // TODO: re-enable after Resend domain is verified
+    // if (!user.emailVerified) {
+    //   return NextResponse.json(
+    //     { error: 'Please verify your email before logging in' },
+    //     { status: 403 }
+    //   );
+    // }
 
     // Create tokens and set cookies
     const accessToken = await createAccessToken({ userId: user.id, email: user.email, role: user.role });
