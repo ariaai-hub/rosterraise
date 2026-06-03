@@ -60,8 +60,11 @@ export default function LoginPage() {
       }
 
       const role = data.user?.role;
+      const teamSlug = data.user?.teamSlug;
       if (role === 'ADMIN' || role === 'SALES_REP') {
         router.push('/admin/crm');
+      } else if (role === 'COACH' && teamSlug) {
+        router.push(`/team/${teamSlug}`);
       } else {
         router.push('/');
       }
