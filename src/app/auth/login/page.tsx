@@ -104,17 +104,16 @@ export default function LoginPage() {
             {/* Logo */}
             <div style={{ marginBottom: '24px' }}>
               <a href="/" style={{ textDecoration: 'none' }}>
-                <div style={{
-                  fontFamily: '"Oswald", sans-serif',
-                  fontSize: '32px',
-                  fontWeight: 700,
-                  letterSpacing: '0.15em',
-                  color: '#E63946',
-                  textAlign: 'center',
-                  lineHeight: 1,
-                }}>
-                  ROSTERRAISE
-                </div>
+                <img
+                  src="/logo_rr.png"
+                  alt="RosterRaise"
+                  style={{
+                    width: '120px',
+                    height: 'auto',
+                    display: 'block',
+                    margin: '0 auto',
+                  }}
+                />
               </a>
             </div>
 
