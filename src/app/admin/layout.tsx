@@ -83,12 +83,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       try {
         const res = await fetch('/api/auth/session');
         if (!res.ok) {
-          router.push('/admin');
+          router.push('/auth/login');
           return;
         }
         const data = await res.json();
         if (!data.user) {
-          router.push('/admin');
+          router.push('/auth/login');
           return;
         }
         // ADMIN or SALES_REP can access store admin
@@ -99,10 +99,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         } else if (data.user.role === 'PARENT') {
           router.push('/store/demo-team');
         } else {
-          router.push('/admin');
+          router.push('/auth/login');
         }
       } catch {
-        router.push('/admin');
+        router.push('/auth/login');
       } finally {
         setLoading(false);
       }
@@ -154,9 +154,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const handleLogout = async () => {
     try {
       await fetch('/api/auth/logout', { method: 'POST' });
-      router.push('/admin');
+      router.push('/auth/login');
     } catch {
-      router.push('/admin');
+      router.push('/auth/login');
     }
   };
 

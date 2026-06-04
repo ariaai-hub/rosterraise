@@ -31,12 +31,12 @@ export default function CoachLayout({ children }: { children: React.ReactNode })
       try {
         const res = await fetch('/api/auth/session', { credentials: 'include' });
         if (!res.ok) {
-          router.push(`/coach/${teamSlug}`);
+          router.push('/auth/login');
           return;
         }
         const data = await res.json();
         if (!data.user || data.user.role !== 'COACH') {
-          router.push(`/coach/${teamSlug}`);
+          router.push('/auth/login');
           return;
         }
         // Verify coach's teamId matches the actual team's UUID id (not slug)
@@ -46,13 +46,13 @@ export default function CoachLayout({ children }: { children: React.ReactNode })
           // teamId in session is the team's UUID; teamSlug is the URL slug
           // For coaches, teamId is their team UUID, which matches teamData.id
           if (teamData.team && data.user.teamId !== teamData.team.id) {
-            router.push(`/coach/${teamSlug}`);
+            router.push('/auth/login');
             return;
           }
         }
         setUser(data.user);
       } catch {
-        router.push(`/coach/${teamSlug}`);
+        router.push('/auth/login');
       } finally {
         setLoading(false);
       }
@@ -91,9 +91,9 @@ export default function CoachLayout({ children }: { children: React.ReactNode })
   const handleLogout = async () => {
     try {
       await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
-      router.push(`/coach/${teamSlug}`);
+      router.push('/auth/login');
     } catch {
-      router.push(`/coach/${teamSlug}`);
+      router.push('/auth/login');
     }
   };
 
