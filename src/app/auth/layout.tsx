@@ -7,7 +7,7 @@ export default function AuthLayout({
     <div
       style={{
         minHeight: '100vh',
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#0A0A0A',
         padding: '60px 15px 40px',
         display: 'flex',
         flexDirection: 'column',
