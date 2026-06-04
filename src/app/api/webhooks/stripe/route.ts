@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import Stripe from 'stripe';
+import { sendCoachNewOrderSMS } from '@/lib/twilio';
 
 function getStripe(): Stripe {
   const key = process.env.STRIPE_SECRET_KEY;
@@ -38,12 +39,24 @@ export async function POST(request: NextRequest) {
     switch (event.type) {
       case 'payment_intent.succeeded': {
         const paymentIntent = event.data.object as Stripe.PaymentIntent;
-        
-        // Find order by stripePaymentId and update status
-        await prisma.order.updateMany({
+
+        // Find order and update status
+        const orders = await prisma.order.updateMany({
           where: { stripePaymentId: paymentIntent.id },
           data: { status: 'PAID' },
         });
+
+        // Send SMS to coach if order was found
+        if (orders.count > 0) {
+          const order = await prisma.order.findFirst({
+            where: { stripePaymentId: paymentIntent.id },
+            include: { team: { include: { coach: true } } },
+          });
+          if (order?.team?.coach?.phone) {
+            const total = `$${(paymentIntent.amount / 100).toFixed(2)}`;
+            await sendCoachNewOrderSMS(order.team.coach.phone, order.team.name, total);
+          }
+        }
         break;
       }
 
