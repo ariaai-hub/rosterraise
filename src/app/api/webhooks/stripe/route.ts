@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
         if (orders.count > 0) {
           const order = await prisma.order.findFirst({
             where: { stripePaymentId: paymentIntent.id },
-            include: { team: { include: { users: { where: { role: 'COACH' }, select: { phone: true } } } } },
+            include: { team: { include: { users: { where: { role: 'COACH' } } } } },
           });
           const coach = order?.team?.users?.[0];
           if (coach?.phone) {

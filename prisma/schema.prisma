@@ -39,12 +39,13 @@ model User {
   role             UserRole  @default(PARENT)
   teamId           String?
   team             Team?     @relation(fields: [teamId], references: [id])
+  phone            String?
+  commissionRate   Float?
   emailVerified    Boolean   @default(false)
   emailVerifyToken String?
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @updatedAt
   orders           Order[]
-  commissionRate   Float?
   isActive         Boolean   @default(true)
   assignedLeads    Lead[]    @relation("AssignedLeads")
 
