@@ -50,11 +50,12 @@ export async function POST(request: NextRequest) {
         if (orders.count > 0) {
           const order = await prisma.order.findFirst({
             where: { stripePaymentId: paymentIntent.id },
-            include: { team: { include: { coach: true } } },
+            include: { team: { include: { users: { where: { role: 'COACH' }, select: { phone: true } } } } },
           });
-          if (order?.team?.coach?.phone) {
+          const coach = order?.team?.users?.[0];
+          if (coach?.phone) {
             const total = `$${(paymentIntent.amount / 100).toFixed(2)}`;
-            await sendCoachNewOrderSMS(order.team.coach.phone, order.team.name, total);
+            await sendCoachNewOrderSMS(coach.phone, order!.team.name, total);
           }
         }
         break;
